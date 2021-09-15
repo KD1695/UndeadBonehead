@@ -14,10 +14,14 @@ class GameManager
         this.lives = 3;
         this.shields = 8;
         this.playerDirection = 0;
+		this.bugsSpawned = 0;
+		this.totalBugsToSpawn = 15;
+		this.maxBugsOnScreen = 5;
+		this.maxBombsOnScreen = 7;
         this.canPlayerPunch = true;
         this.canPlayerShoot = true;
         this.bugs = {};
-        this.bombs = this.physics.add.group();
+        this.bombs = {};
         this.specials = {};
         this.gameState = gameStates.START;
     }

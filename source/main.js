@@ -5,14 +5,14 @@ window.onload = function()
         width: 800,
         height: 600,
         parent: 'phaser-game',
-        scene: [SceneMain],
-		physics: {
+        physics: {
 			default: 'arcade',
 			arcade: {
 				gravity: { y: 0 },
 				debug: false
 			}
-		}
+		},
+		scene: [SceneMain]
     };
 
     var game = new Phaser.Game(config);
