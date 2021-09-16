@@ -59,6 +59,8 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	
 	idleUpdate(timestep)
 	{		
+		//console.log("IDLE");
+		
 		if (this.currentStateTime < this.stateDuration)
 		{
 			this.currentStateTime += timestep;
@@ -106,7 +108,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	
 	movingUpdate(timestep)
 	{
-		console.log("MOVING");
+		//console.log("MOVING");
 		
 		if (Math.abs(this.x - this.moveDestination.x) < 5 && Math.abs(this.y - this.moveDestination.y) < 5)
 		{
@@ -161,7 +163,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			{
 				for (let i = this.x; i > this.targetBomb.x; i--)
 				{
-					if (i < this.spawnManager.maxDeadZoneX)
+					if (i < this.spawnManager.maxDeadZoneX + this.spawnManager.spawnZoneBuffer)
 					{
 						if (this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
 						{
@@ -175,7 +177,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			{
 				for (let i = this.x; i < this.targetBomb.x; i++)
 				{
-					if (i > this.spawnManager.minDeadZoneX)
+					if (i > this.spawnManager.minDeadZoneX - this.spawnManager.spawnZoneBuffer)
 					{
 						if (this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
 						{
@@ -194,7 +196,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			{
 				for (let i = this.y; i > this.targetBomb.y; i--)
 				{
-					if (i < this.spawnManager.maxDeadZoneY)
+					if (i < (this.spawnManager.maxDeadZoneY + this.spawnManager.spawnZoneBuffer))
 					{
 						if (this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
 						{
@@ -208,7 +210,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			{
 				for (let i = this.y; i < this.targetBomb.y; i++)
 				{
-					if (i > this.spawnManager.minDeadZoneY)
+					if (i > this.spawnManager.minDeadZoneY - this.spawnManager.spawnZoneBuffer)
 					{
 						if (this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
 						{
@@ -220,41 +222,42 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			}
 		}
 		
-		/*
-		if (this.y < this.spawnManager.minDeadZoneY && this.y > this.spawnManager.maxDeadZoneY)
-		{
-			verticalCollision = false;
-		}
-		
-		if (this.x < this.spawnManager.minDeadZoneX && this.x > this.spawnManager.maxDeadZoneX)
-		{
-			horizontalCollision = false;
-		}
-		*/
-		
 		//Prioritize horizontal collisions first (picked arbitrarily)
 		if (horizontalCollision === true)
 		{
-			console.log("Horizontal Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
+			//console.log("Horizontal Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
 			this.scene.physics.moveTo(this, this.x, this.targetBomb.y, this.moveSpeed);	
 		}
 		else if (verticalCollision === true)
 		{
-			console.log("Vertical Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
+			//console.log("Vertical Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
 			this.scene.physics.moveTo(this, this.targetBomb.x, this.y, this.moveSpeed);	
 		}
 		else
 		{
-			console.log("No Collision");
+			//console.log("No Collision");
 			this.scene.physics.moveTo(this, this.targetBomb.x, this.targetBomb.y, this.moveSpeed);	
 		}
 	}
 	
 	pushingUpdate(timestep)
 	{
+		//console.log("PUSHING");
+		
 		if (this.currentPushDelayTime < this.pushDelay)
 		{
 			this.currentPushDelayTime += timestep;
+			return;
+		}
+		
+		if (this.body.blocked.up === true || this.body.blocked.down === true || this.body.blocked.left === true || this.body.blocked.right === true)
+		{
+			console.log("This is triggering");
+			this.scene.physics.moveToObject(this, this, 0);
+			this.currentPushDelayTime = 0;
+			this.currentState = bugStates.MOVING;
+			var moveDirection = {x: this.x - this.spawnManager.screenCenter.x, y: this.y - this.spawnManager.screenCenter.y };
+			this.moveDestination = {x: this.x + moveDirection.x, y: this.y + moveDirection.y };
 			return;
 		}
 		
@@ -262,7 +265,6 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		{
 			if (this.hasEnteredDeadZone() === true)
 			{
-				console.log("Entered dead zone");
 				this.currentState = bugStates.MOVING;
 				this.currentPushDelayTime = 0;
 				this.scene.physics.moveToObject(this, this, 0);
@@ -272,7 +274,6 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			}
 			else
 			{
-				console.log("Pushing towards center");
 				this.scene.physics.moveTo(this, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
 				this.scene.physics.moveTo(this.targetBomb, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
 			}
@@ -291,25 +292,21 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		//Left border
 		if (Math.abs(this.x - this.spawnManager.minDeadZoneX) < 5 && this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
 		{
-			console.log("Touched left border");
 			return true;
 		}
 		//Right border
 		if (Math.abs(this.x - this.spawnManager.maxDeadZoneX) < 5 && this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
 		{
-			console.log("Touched right border");
 			return true;
 		}
 		//Top border
 		if (Math.abs(this.y - this.spawnManager.minDeadZoneY) < 5 && this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
 		{
-			console.log("Touched top border");
 			return true;
 		}
 		//Bottom border
 		if (Math.abs(this.y - this.spawnManager.maxDeadZoneY) < 5 && this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
 		{
-			console.log("Touched bottom border");
 			return true;
 		}
 		

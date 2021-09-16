@@ -16,12 +16,13 @@ class GameManager
         this.playerDirection = 0;
 		this.bugsSpawned = 0;
 		this.totalBugsToSpawn = 15;
-		this.maxBugsOnScreen = 5;
+		this.maxBugsOnScreen = 3;
 		this.maxBombsOnScreen = 7;
         this.canPlayerPunch = true;
         this.canPlayerShoot = true;
         this.bombsPhysicsGroup = [];
 		this.bugsPhysicsGroup = [];
+		this.wallsPhysicsGroup = [];
         this.specials = {};
         this.gameState = gameStates.START;
     }
