@@ -60,7 +60,6 @@ class Player extends Phaser.GameObjects.Sprite
 
     Shoot(scene)
     {
-        let bullet = scene.physics.add.sprite(this.x, this.y, 'bullet').setScale(0.25);
-        scene.physics.velocityFromAngle(this.angle, 600, bullet.body.velocity);
+        let bullet = new Bullet({scene:scene,x:this.x,y:this.y,angle:this.angle,velocity:600});
     }
 }

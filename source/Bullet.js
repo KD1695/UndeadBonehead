@@ -1,19 +1,23 @@
-class Player extends Phaser.GameObjects.Sprite
+class Bullet
 {
     constructor(config)
     {
-        super(config.scene, config.x, config.y, "player");
-        this.speed = 50;
-        this.direction = config.direction;
-        config.scene.add.existing(this);
-        this.bounds = { x : config.scene.world.bounds.x, y : config.scene.world.bounds.y};
+        this.bulletSprite = config.scene.physics.add.sprite(config.x, config.y, 'bullet');
+        this.bulletSprite.setBounce(0.5,0.5);
+        this.bulletSprite.setCollideWorldBounds(true);
+        config.scene.physics.velocityFromAngle(config.angle, config.velocity, this.bulletSprite.body.velocity);
+        this.bulletSprite.setScale(0.25);
+        this.bounds = { x : config.scene.physics.world.bounds.x, y : config.scene.physics.world.bounds.y};
     }
 
     update()
     {
-        if(this.x > this.bounds.x || this.y > this.bounds.y || this.x < 0 || this.y < 0)
+        if(this.bulletSprite == null)
+            return;
+        if(this.bulletSprite.body.velocity.x < 0.1 && this.bulletSprite.body.velocity.y < 0.1)
         {
-            this.destroy();
+            this.bulletSprite.destroy();
+            this.bulletSprite = null;
         }
     }
 }
