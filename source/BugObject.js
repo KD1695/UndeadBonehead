@@ -19,16 +19,19 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.maxStateDuration = 1.5;
 		this.randomMoveDirection = {x: 0, y: 0}
 		this.moveSpeed = 200;
+		this.currentPushDelayTime = 0;
+		this.pushDelay = 1;
 		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
 		this.currentStateTime = 0;
 		scene.add.existing(this);
     }
 	
-	spawn(spawnX, spawnY, bombsPhysicsGroup)
+	spawn(spawnX, spawnY, bombsPhysicsGroup, spawnManager)
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
 		this.bombs = bombsPhysicsGroup;
+		this.spawnManager = spawnManager
 		this.setActive(true);
 		this.setVisible(true);
 	}
@@ -44,7 +47,10 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				this.movingUpdate(dt / 1000);
 				break;
 			case bugStates.TARGETING:
-				this.targetingUpdate(dt / 1000);
+				this.targetingUpdate();
+				break;
+			case bugStates.PUSHING:
+				this.pushingUpdate(dt / 1000);
 				break;
 			default:
 				break;
@@ -102,28 +108,17 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{
 		console.log("MOVING");
 		
-		if (this.currentStateTime < this.stateDuration)
+		/*if (this.currentStateTime < this.stateDuration)
 		{
 			this.currentStateTime += timestep;
 			return;
 		}
 		
-		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
 		this.currentStateTime = 0;
-		
-		//30% chance bug goes into TARGETING mode from MOVING
-		var targetingChance = Phaser.Math.Between(0, 100);
-		if (targetingChance < 30)
-		{
-			this.currentState = bugStates.TARGETING;
-		}
-		else
-		{
-			this.currentState = bugStates.IDLE;	
-		}
+		this.currentState = bugStates.IDLE;	*/
 	}
 	
-	targetingUpdate(timestep)
+	targetingUpdate()
 	{
 		if (this.targetBomb.active === true)
 		{
@@ -131,7 +126,10 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			
 			if (Math.abs(this.x - this.targetBomb.x) < 5 && Math.abs(this.y - this.targetBomb.y) < 5)
 			{
-				this.scene.physics.moveToObject(this, this.targetBomb, 1);
+				this.x = this.targetBomb.x;
+				this.y = this.targetBomb.y;
+				this.scene.physics.moveToObject(this, this, 0);
+				this.currentState = bugStates.PUSHING;
 			}
 			else
 			{
@@ -142,6 +140,70 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		{
 			this.scene.physics.moveToObject(this, this, 0);
 			this.currentState = bugStates.IDLE;
-		}	
+		}
+	}
+	
+	pushingUpdate(timestep)
+	{
+		if (this.currentPushDelayTime < this.pushDelay)
+		{
+			this.currentPushDelayTime += timestep;
+			return;
+		}
+		
+		if (this.targetBomb.active === true)
+		{
+			if (this.hasEnteredDeadZone() === true)
+			{
+				console.log("Entered dead zone");
+				this.currentState = bugStates.MOVING;
+				this.currentPushDelayTime = 0;
+				this.scene.physics.moveToObject(this, this, 0);
+				this.scene.physics.moveToObject(this.targetBomb, this.targetBomb, 0);
+			}
+			else
+			{
+				console.log("Pushing towards center");
+				this.scene.physics.moveTo(this, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
+				this.scene.physics.moveTo(this.targetBomb, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
+			}
+			
+		}
+		else
+		{
+			this.scene.physics.moveToObject(this, this, 0);
+			this.currentPushDelayTime = 0;
+			this.currentState = bugStates.IDLE;
+		}
+	}
+	
+	hasEnteredDeadZone()
+	{
+		//Left border
+		if (Math.abs(this.x - this.spawnManager.minDeadZoneX) < 5 && this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
+		{
+			console.log("Touched left border");
+			return true;
+		}
+		//Right border
+		if (Math.abs(this.x - this.spawnManager.maxDeadZoneX) < 5 && this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
+		{
+			console.log("Touched right border");
+			return true;
+		}
+		//Top border
+		if (Math.abs(this.y - this.spawnManager.minDeadZoneY) < 5 && this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
+		{
+			console.log("Touched top border");
+			return true;
+		}
+		//Bottom border
+		if (Math.abs(this.y - this.spawnManager.maxDeadZoneY) < 5 && this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
+		{
+			console.log("Touched bottom border");
+			return true;
+		}
+		
+		return false;
 	}
 }

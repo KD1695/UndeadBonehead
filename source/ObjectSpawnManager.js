@@ -16,6 +16,8 @@ class ObjectSpawnManager
 	
 		this.objectKey = config.objectKey;
 	
+		this.screenCenter = {x: config.camera.centerX, y: config.camera.centerY };
+	
 		this.minDeadZoneX = config.camera.centerX - this.deadZoneWidth;
 		this.minDeadZoneY = config.camera.centerY - this.deadZoneWidth;
 		this.maxDeadZoneX = config.camera.centerX + this.deadZoneWidth;;

@@ -47,7 +47,7 @@ class SceneMain extends Phaser.Scene
 			this.bugSpawnManager.shouldSpawnObject(dt / 1000) === true)
 		{
 			var spawnCoordinates = this.bugSpawnManager.getObjectSpawnCoordinates();
-			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup});
+			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup, spawnManager: this.bugSpawnManager});
 			this.gameManager.bugsSpawned += 1;
 		}
 	}

@@ -13,7 +13,7 @@ class BugGroup extends Phaser.Physics.Arcade.Group
 		
 		//console.log("Game Manager Check: " + config.gameManager.bugsSpawned);
 		
-		bug.spawn(config.x, config.y, config.bombsPhysicsGroup);
+		bug.spawn(config.x, config.y, config.bombsPhysicsGroup, config.spawnManager);
 	}
 	
 	createNewBugs()

@@ -14,7 +14,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 	
 	spawn(spawnX, spawnY, bombGroup)
 	{		
-		console.log("Bomb Spawned at: (" + spawnX + ", " + spawnY + ")");
+		//console.log("Bomb Spawned at: (" + spawnX + ", " + spawnY + ")");
 		
 		this.x = spawnX;
 		this.y = spawnY;
