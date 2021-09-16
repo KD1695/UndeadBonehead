@@ -1,0 +1,188 @@
+{
+	"textures": [
+		{
+			"image": "Spine.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 301,
+				"h": 46
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Spin_7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 37,
+						"h": 44
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 37,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 11,
+						"w": 36,
+						"h": 44
+					},
+					"frame": {
+						"x": 40,
+						"y": 1,
+						"w": 36,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 36,
+						"h": 44
+					},
+					"frame": {
+						"x": 78,
+						"y": 1,
+						"w": 36,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 36,
+						"h": 44
+					},
+					"frame": {
+						"x": 116,
+						"y": 1,
+						"w": 36,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 35,
+						"h": 44
+					},
+					"frame": {
+						"x": 154,
+						"y": 1,
+						"w": 35,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 35,
+						"h": 44
+					},
+					"frame": {
+						"x": 191,
+						"y": 1,
+						"w": 35,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 35,
+						"h": 44
+					},
+					"frame": {
+						"x": 228,
+						"y": 1,
+						"w": 35,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Spin_6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 11,
+						"w": 35,
+						"h": 44
+					},
+					"frame": {
+						"x": 265,
+						"y": 1,
+						"w": 35,
+						"h": 44
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:651a6549f9c0c40c97339c35f5ffc9b1:6652f52f79d0a9a103dd2f8fdfb70877:47e159f3c2c9caf5e1c38c99c2d8fcf4$"
+	}
+}
