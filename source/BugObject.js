@@ -34,6 +34,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.spawnManager = spawnManager
 		this.setActive(true);
 		this.setVisible(true);
+		this.body.enable = true;
 	}
 	
 	preUpdate(timestep, dt)

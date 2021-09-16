@@ -17,6 +17,7 @@ class WallObject extends Phaser.Physics.Arcade.Sprite
 		this.y = spawnY;
 		this.setActive(true);
 		this.setVisible(true);
+		this.body.enable = true;
 		
 		if (shouldRotate === true)
 		{
