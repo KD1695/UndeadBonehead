@@ -11,6 +11,7 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bomb", "assets/bomb.png");
 		this.load.image("bug", "assets/bug.png");
 		this.load.image("wall", "assets/wall.png");
+        this.load.image("bullet", "assets/bullet.png");
     }
 
     create()
@@ -29,13 +30,14 @@ class SceneMain extends Phaser.Scene
 		this.physics.add.group(this.gameManager.wallsPhysicsGroup);
 		
 		this.player = new Player({scene:this,x:400,y:300});
-		
 		this.physics.add.collider(this.gameManager.bugsPhysicsGroup, this.gameManager.wallsPhysicsGroup);
+        this.player.create(this);
     }
 
     update(timestep, dt)
     {
-        this.player.update();		
+        this.player.update(this, dt);
+		
 		this.spawnObjects(dt);
     }
 	
