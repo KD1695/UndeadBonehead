@@ -10,6 +10,7 @@ class SceneMain extends Phaser.Scene
         this.load.image("player", "assets/star.png");
 		this.load.image("bomb", "assets/bomb.png");
 		this.load.image("bug", "assets/bug.png");
+        this.load.image("bullet", "assets/bullet.png");
     }
 
     create()
@@ -22,11 +23,12 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
 		
 		this.player = new Player({scene:this,x:400,y:300});
+        this.player.create(this);
     }
 
     update(timestep, dt)
     {
-        this.player.update();
+        this.player.update(this, dt);
 		
 		this.spawnObjects(dt);
     }
