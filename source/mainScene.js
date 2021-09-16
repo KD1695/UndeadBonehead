@@ -16,7 +16,7 @@ class SceneMain extends Phaser.Scene
     {
         this.gameManager = new GameManager();
 		
-		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:3, maxDelay:5});
+		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2});
 		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8});
 		this.gameManager.bombsPhysicsGroup = new BombGroup(this);
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
@@ -47,7 +47,8 @@ class SceneMain extends Phaser.Scene
 			this.bugSpawnManager.shouldSpawnObject(dt / 1000) === true)
 		{
 			var spawnCoordinates = this.bugSpawnManager.getObjectSpawnCoordinates();
-			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombPhysicsGroup: this.gameManager.bombPhysicsGroup});
+			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup});
+			this.gameManager.bugsSpawned += 1;
 		}
 	}
 }

@@ -11,9 +11,9 @@ class BugGroup extends Phaser.Physics.Arcade.Group
 	{
 		var bug = this.getFirstDead(false);
 		
-		config.bombPhysicsGroup.getFirstDead(false);
+		//console.log("Game Manager Check: " + config.gameManager.bugsSpawned);
 		
-		bug.spawn(config.x, config.y, config.bombPhysicsGroup);
+		bug.spawn(config.x, config.y, config.bombsPhysicsGroup);
 	}
 	
 	createNewBugs()

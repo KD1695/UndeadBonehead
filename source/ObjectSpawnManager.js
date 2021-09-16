@@ -20,7 +20,7 @@ class ObjectSpawnManager
 		this.minDeadZoneY = config.camera.centerY - this.deadZoneWidth;
 		this.maxDeadZoneX = config.camera.centerX + this.deadZoneWidth;;
 		this.maxDeadZoneY = config.camera.centerY + this.deadZoneWidth;;
-	
+		
 		this.delayUntilNextObject = Phaser.Math.Between(this.minDelayBetweenObjects, this.maxDelayBetweenObjects);
     }
 	

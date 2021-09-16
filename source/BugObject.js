@@ -18,18 +18,17 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.minStateDuration = 0.5;
 		this.maxStateDuration = 1.5;
 		this.randomMoveDirection = {x: 0, y: 0}
-		this.moveSpeed = 5;
+		this.moveSpeed = 200;
 		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
 		this.currentStateTime = 0;
 		scene.add.existing(this);
     }
 	
-	spawn(spawnX, spawnY, bombPhysicsGroup)
+	spawn(spawnX, spawnY, bombsPhysicsGroup)
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
-		this.bombs = bombPhysicsGroup;
-		//bombPhysicsGroup.getFirst();
+		this.bombs = bombsPhysicsGroup;
 		this.setActive(true);
 		this.setVisible(true);
 	}
@@ -53,9 +52,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	}
 	
 	idleUpdate(timestep)
-	{
-		console.log("IDLE");
-		
+	{		
 		if (this.currentStateTime < this.stateDuration)
 		{
 			this.currentStateTime += timestep;
@@ -67,20 +64,38 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		
 		this.currentState = bugStates.TARGETING;
 		
-		//var targetBombIndex = Phaser.Math.Between(0, this.bombs.getLength());
+		this.getRandomTargetBomb();
 		
-		this.targetBomb = this.bombs.getFirst();
-		
-		//10% chance bug goes into TARGETING mode from IDLE
-		/*var targetingChance = Phaser.Math.Between(0, 100);
-		if (targetingChance < 10)
+		//Retry a maximum of 20 times to find an untargeted bomb
+		for (let i = 0; i < 20; i++)
 		{
-			this.currentState = bugStates.TARGETING;
+			if (this.targetBomb.targeted === false)
+			{
+				break;
+			}
+			
+			this.getRandomTargetBomb();
+		}
+		
+		//Return to idle if no targeted bomb was found
+		if (this.targetBomb.targeted === true)
+		{
+			this.currentState = bugStates.IDLE;
+		}
+	}
+	
+	getRandomTargetBomb()
+	{
+		var targetBombIndex = Phaser.Math.Between(0, this.bombs.totalActiveBombs);
+		
+		if (targetBombIndex === 0)
+		{
+			this.targetBomb = this.bombs.getFirstAlive();
 		}
 		else
 		{
-			this.currentState = bugStates.MOVING;	
-		}*/
+			this.targetBomb = this.bombs.getFirstNth(targetBombIndex, true);	
+		}
 	}
 	
 	movingUpdate(timestep)
@@ -110,8 +125,23 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	
 	targetingUpdate(timestep)
 	{
-		console.log("TARGETING bomb at: " + "(" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
-		
-		
+		if (this.targetBomb.active === true)
+		{
+			this.targetBomb.targeted = true;
+			
+			if (Math.abs(this.x - this.targetBomb.x) < 5 && Math.abs(this.y - this.targetBomb.y) < 5)
+			{
+				this.scene.physics.moveToObject(this, this.targetBomb, 1);
+			}
+			else
+			{
+				this.scene.physics.moveToObject(this, this.targetBomb, this.moveSpeed);	
+			}
+		}
+		else
+		{
+			this.scene.physics.moveToObject(this, this, 0);
+			this.currentState = bugStates.IDLE;
+		}	
 	}
 }
