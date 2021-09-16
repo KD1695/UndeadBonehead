@@ -10,19 +10,27 @@ class SceneMain extends Phaser.Scene
         this.load.image("player", "assets/star.png");
 		this.load.image("bomb", "assets/bomb.png");
 		this.load.image("bug", "assets/bug.png");
+		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
     }
 
     create()
     {
-        this.gameManager = new GameManager();
+		this.gameManager = new GameManager();
 		
-		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2});
-		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8});
+		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2, spawnZoneBuffer:60});
+		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8, spawnZoneBuffer:60});
 		this.gameManager.bombsPhysicsGroup = new BombGroup(this);
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
+		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
+		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
+		
+		this.physics.add.group(this.gameManager.bombsPhysicsGroup);
+		this.physics.add.group(this.gameManager.bugsPhysicsGroup);
+		this.physics.add.group(this.gameManager.wallsPhysicsGroup);
 		
 		this.player = new Player({scene:this,x:400,y:300});
+		this.physics.add.collider(this.gameManager.bugsPhysicsGroup, this.gameManager.wallsPhysicsGroup);
         this.player.create(this);
     }
 

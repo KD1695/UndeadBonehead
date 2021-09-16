@@ -23,6 +23,8 @@ class ObjectSpawnManager
 		this.maxDeadZoneX = config.camera.centerX + this.deadZoneWidth;;
 		this.maxDeadZoneY = config.camera.centerY + this.deadZoneWidth;;
 		
+		this.spawnZoneBuffer = config.spawnZoneBuffer;
+		
 		this.delayUntilNextObject = Phaser.Math.Between(this.minDelayBetweenObjects, this.maxDelayBetweenObjects);
     }
 	
@@ -57,8 +59,8 @@ class ObjectSpawnManager
 	
 	isInDeadZone(spawnPoint)
 	{
-		if (spawnPoint.x > this.minDeadZoneX && spawnPoint.x < this.maxDeadZoneX &&
-		    spawnPoint.y > this.minDeadZoneY && spawnPoint.y < this.maxDeadZoneY)
+		if (spawnPoint.x > (this.minDeadZoneX - this.spawnZoneBuffer) && spawnPoint.x < (this.maxDeadZoneX + this.spawnZoneBuffer) &&
+		    spawnPoint.y > (this.minDeadZoneY - this.spawnZoneBuffer) && spawnPoint.y < (this.maxDeadZoneY + this.spawnZoneBuffer))
 		{
 			return true;
 		}
