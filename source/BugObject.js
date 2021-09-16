@@ -137,13 +137,116 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			}
 			else
 			{
-				this.scene.physics.moveToObject(this, this.targetBomb, this.moveSpeed);	
+				this.moveTowardsBomb();
 			}
 		}
 		else
 		{
 			this.scene.physics.moveToObject(this, this, 0);
 			this.currentState = bugStates.IDLE;
+		}
+	}
+	
+	moveTowardsBomb()
+	{
+		var moveDirection = {x: this.targetBomb.x - this.x, y: this.targetBomb.y - this.y };
+		
+		var horizontalCollision = false;
+		var verticalCollision = false;
+		
+		//Check for horizontal dead zone collision
+		if (Math.abs(this.y - this.targetBomb.y) > 5)
+		{
+			if (moveDirection.x < 0)
+			{
+				for (let i = this.x; i > this.targetBomb.x; i--)
+				{
+					if (i < this.spawnManager.maxDeadZoneX)
+					{
+						if (this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
+						{
+							horizontalCollision = true;
+							break;
+						}
+					}
+				}	
+			}
+			else
+			{
+				for (let i = this.x; i < this.targetBomb.x; i++)
+				{
+					if (i > this.spawnManager.minDeadZoneX)
+					{
+						if (this.y > this.spawnManager.minDeadZoneY && this.y < this.spawnManager.maxDeadZoneY)
+						{
+							horizontalCollision = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		//Check for vertical dead zone collision
+		if (Math.abs(this.x - this.targetBomb.x) > 5)
+		{
+			if (moveDirection.y < 0)
+			{
+				for (let i = this.y; i > this.targetBomb.y; i--)
+				{
+					if (i < this.spawnManager.maxDeadZoneY)
+					{
+						if (this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
+						{
+							verticalCollision = true;
+							break;
+						}
+					}
+				}	
+			}
+			else
+			{
+				for (let i = this.y; i < this.targetBomb.y; i++)
+				{
+					if (i > this.spawnManager.minDeadZoneY)
+					{
+						if (this.x > this.spawnManager.minDeadZoneX && this.x < this.spawnManager.maxDeadZoneX)
+						{
+							verticalCollision = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		/*
+		if (this.y < this.spawnManager.minDeadZoneY && this.y > this.spawnManager.maxDeadZoneY)
+		{
+			verticalCollision = false;
+		}
+		
+		if (this.x < this.spawnManager.minDeadZoneX && this.x > this.spawnManager.maxDeadZoneX)
+		{
+			horizontalCollision = false;
+		}
+		*/
+		
+		//Prioritize horizontal collisions first (picked arbitrarily)
+		if (horizontalCollision === true)
+		{
+			console.log("Horizontal Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
+			this.scene.physics.moveTo(this, this.x, this.targetBomb.y, this.moveSpeed);	
+		}
+		else if (verticalCollision === true)
+		{
+			console.log("Vertical Collision! Bug Position: (" + this.x + ", " + this.y + ") Bomb Position: (" + this.targetBomb.x + ", " + this.targetBomb.y + ")");
+			this.scene.physics.moveTo(this, this.targetBomb.x, this.y, this.moveSpeed);	
+		}
+		else
+		{
+			console.log("No Collision");
+			this.scene.physics.moveTo(this, this.targetBomb.x, this.targetBomb.y, this.moveSpeed);	
 		}
 	}
 	

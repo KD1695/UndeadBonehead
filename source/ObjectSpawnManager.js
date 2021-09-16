@@ -4,12 +4,12 @@ class ObjectSpawnManager
     {	
 		this.timeSinceLastObject = 0;
 		
-		this.minXSpawnPoint = 0;
-		this.minYSpawnPoint = 0;	
-		this.maxXSpawnPoint = 800;
-		this.maxYSpawnPoint = 600;
+		this.minXSpawnPoint = 100;
+		this.minYSpawnPoint = 50;	
+		this.maxXSpawnPoint = 700;
+		this.maxYSpawnPoint = 550;
 	
-		this.deadZoneWidth = 150;
+		this.deadZoneWidth = 75;
 
 		this.minDelayBetweenObjects = config.minDelay;
 		this.maxDelayBetweenObjects = config.maxDelay;
