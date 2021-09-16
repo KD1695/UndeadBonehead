@@ -3,7 +3,7 @@ class Player extends Phaser.GameObjects.Sprite
     constructor(config)
     {
         super(config.scene, config.x, config.y, "player");
-        this.speed = 2.5;
+        this.rotationSpeed = 0.02;
         this.canRotate = true;
         this.canPunch = false;
         this.rpm = 400;
@@ -29,12 +29,12 @@ class Player extends Phaser.GameObjects.Sprite
         if (this.cursors.left.isDown)
         {
             if(this.canRotate)
-                this.angle -= this.speed;
+                this.rotation -= this.rotationSpeed;
         }
         else if (this.cursors.right.isDown)
         {
             if(this.canRotate)
-                this.angle += this.speed;
+                this.rotation += this.rotationSpeed;
         }
         if(this.cursors.up.isDown)
         {
@@ -61,6 +61,6 @@ class Player extends Phaser.GameObjects.Sprite
     Shoot(scene)
     {
         let bullet = scene.physics.add.sprite(this.x, this.y, 'bullet').setScale(0.25);
-        scene.physics.velocityFromRotation(this.angle, 600, bullet.body.velocity);
+        scene.physics.velocityFromAngle(this.angle, 600, bullet.body.velocity);
     }
 }
