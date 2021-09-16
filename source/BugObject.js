@@ -24,6 +24,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
 		this.currentStateTime = 0;
 		scene.add.existing(this);
+		scene.sys.arcadePhysics.world.enableBody(this, 0)
     }
 	
 	spawn(spawnX, spawnY, bombsPhysicsGroup, spawnManager)

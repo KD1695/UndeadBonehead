@@ -1,4 +1,4 @@
-class WallGroup extends Phaser.Physics.Arcade.StaticGroup
+class WallGroup extends Phaser.Physics.Arcade.Group
 {
 	constructor(scene)
 	{

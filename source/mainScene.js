@@ -25,9 +25,12 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
 		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
 		
-		this.physics.add.group(this.gameManager.bombsPhysicsGroup);
-		this.physics.add.group(this.gameManager.bugsPhysicsGroup);
-		this.physics.add.staticGroup(this.gameManager.wallsPhysicsGroup);
+		
+		//this.sys.arcadePhysics.world.enableBody(this.gameManager.bombsPhysicsGroup, 0);
+		//this.physics.add.group.existing(this.gameManager.bugsPhysicsGroup);
+		//this.physics.add.group.existing(this.gameManager.wallsPhysicsGroup);
+		//this.sys.arcadePhysics.world.enableBody(this.gameManager.bugsPhysicsGroup, 0);
+		//this.sys.arcadePhysics.world.enableBody(this.gameManager.wallsPhysicsGroup, 0);
 		
 		this.player = new Player({scene:this,x:400,y:300});
 		this.physics.add.collider(this.gameManager.bugsPhysicsGroup, this.gameManager.wallsPhysicsGroup, this.blockBug, null, this);
