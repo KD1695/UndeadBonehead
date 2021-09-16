@@ -18,7 +18,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.minStateDuration = 0.5;
 		this.maxStateDuration = 1.5;
 		this.randomMoveDirection = {x: 0, y: 0}
-		this.moveSpeed = 200;
+		this.moveSpeed = 400;
 		this.currentPushDelayTime = 0;
 		this.pushDelay = 1;
 		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
@@ -108,14 +108,18 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{
 		console.log("MOVING");
 		
-		/*if (this.currentStateTime < this.stateDuration)
+		if (Math.abs(this.x - this.moveDestination.x) < 5 && Math.abs(this.y - this.moveDestination.y) < 5)
 		{
-			this.currentStateTime += timestep;
-			return;
+			this.x = this.moveDestination.x;
+			this.y = this.moveDestination.y;
+			this.scene.physics.moveToObject(this, this, 0);
+			this.currentState = bugStates.IDLE;
+			this.currentStateTime = 0;
 		}
-		
-		this.currentStateTime = 0;
-		this.currentState = bugStates.IDLE;	*/
+		else
+		{
+			this.scene.physics.moveTo(this, this.moveDestination.x, this.moveDestination.y, this.moveSpeed);
+		}
 	}
 	
 	targetingUpdate()
@@ -160,6 +164,8 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				this.currentPushDelayTime = 0;
 				this.scene.physics.moveToObject(this, this, 0);
 				this.scene.physics.moveToObject(this.targetBomb, this.targetBomb, 0);
+				var moveDirection = {x: this.x - this.spawnManager.screenCenter.x, y: this.y - this.spawnManager.screenCenter.y };
+				this.moveDestination = {x: this.x + moveDirection.x, y: this.y + moveDirection.y };
 			}
 			else
 			{

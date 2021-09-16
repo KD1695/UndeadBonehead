@@ -21,8 +21,8 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(true);
 		this.setVisible(true);
 		
-		this.minActiveTime = 7;
-		this.maxActiveTime = 10;
+		this.minActiveTime = 15;
+		this.maxActiveTime = 20;
 		
 		this.fuseTime = Phaser.Math.Between(this.minActiveTime, this.maxActiveTime);
 		
