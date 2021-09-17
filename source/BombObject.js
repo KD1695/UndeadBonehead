@@ -3,8 +3,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 {
 	constructor(scene, x, y)
     {	
-		super(scene, x, y, 'bomb');
-		
+		super(scene, x, y, 'bomb');		
 		this.fuseTime = -1;
 		this.setActive(false);
 		this.setVisible(false);
@@ -18,6 +17,9 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		
 		this.x = spawnX;
 		this.y = spawnY;
+		this.body.setBounce(0.0000002,0.0000002);
+        this.setCollideWorldBounds(true);
+        this.setScale(2);
 		this.setActive(true);
 		this.setVisible(true);
 		

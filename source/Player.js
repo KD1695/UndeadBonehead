@@ -14,6 +14,7 @@ class Player extends Phaser.GameObjects.Sprite
     create(scene)
     {
         this.cursors = scene.input.keyboard.createCursorKeys();
+        scene.gameManager.bulletGroup = scene.physics.add.group();
     }
 
     update(scene, dt)
@@ -60,7 +61,9 @@ class Player extends Phaser.GameObjects.Sprite
 
     Shoot(scene)
     {
-        let bullet = scene.physics.add.sprite(this.x, this.y, 'bullet').setScale(0.25);
+        let bullet = scene.gameManager.bulletGroup.create(this.x,this.y,'bullet');
+        bullet.body.setBounce(0,0);
+        bullet.setScale(0.25);
         scene.physics.velocityFromAngle(this.angle, 600, bullet.body.velocity);
     }
 }

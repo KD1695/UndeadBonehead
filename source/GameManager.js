@@ -20,10 +20,29 @@ class GameManager
 		this.maxBombsOnScreen = 7;
         this.canPlayerPunch = true;
         this.canPlayerShoot = true;
-        this.bombsPhysicsGroup = [];
+        this.bombsPhysicsGroup = null;
 		this.bugsPhysicsGroup = [];
 		this.wallsPhysicsGroup = [];
+        this.bulletGroup = null;
         this.specials = {};
         this.gameState = gameStates.START;
+    }
+
+    create(scene)
+    {
+        scene.physics.add.collider(this.bombsPhysicsGroup, this.bulletGroup, this.testfunc, null, scene);
+    }
+
+    update(scene)
+    {
+        let toDestroy = this.bulletGroup.getChildren().filter(bullet => bullet.x < 0 || bullet.y < 0 || bullet.x > scene.physics.world.bounds.width || bullet.y > scene.physics.world.bounds.height);
+        toDestroy.forEach(bullet => {
+            bullet.destroy();
+        });
+    }
+
+    testfunc(bomb, bullet)
+    {
+        bullet.destroy();
     }
 }
