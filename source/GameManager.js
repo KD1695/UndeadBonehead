@@ -31,6 +31,7 @@ class GameManager
     create(scene)
     {
         scene.physics.add.collider(this.bombsPhysicsGroup, this.bulletGroup, this.testfunc, null, scene);
+		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.testFunc2, null, scene);
     }
 
     update(scene)
@@ -45,4 +46,9 @@ class GameManager
     {
         bullet.destroy();
     }
+	
+	testFunc2(bug, wall)
+	{
+		bug.name = "collided";
+	}
 }

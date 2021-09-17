@@ -42,12 +42,15 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		switch (this.currentState)
 		{
 			case bugStates.IDLE:
+				this.name = "uncollided";
 				this.idleUpdate(dt / 1000);
 				break;
 			case bugStates.MOVING:
+				this.name = "uncollided";
 				this.movingUpdate(dt / 1000);
 				break;
 			case bugStates.TARGETING:
+				this.name = "uncollided";
 				this.targetingUpdate();
 				break;
 			case bugStates.PUSHING:
@@ -251,19 +254,20 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			return;
 		}
 		
-		if (this.body.blocked.up === true || this.body.blocked.down === true || this.body.blocked.left === true || this.body.blocked.right === true)
-		{
-			console.log("This is triggering");
-			this.scene.physics.moveToObject(this, this, 0);
-			this.currentPushDelayTime = 0;
-			this.currentState = bugStates.MOVING;
-			var moveDirection = {x: this.x - this.spawnManager.screenCenter.x, y: this.y - this.spawnManager.screenCenter.y };
-			this.moveDestination = {x: this.x + moveDirection.x, y: this.y + moveDirection.y };
-			return;
-		}
-		
 		if (this.targetBomb.active === true)
 		{
+			if (this.name === "collided")
+			{
+				this.visible = true;
+				this.scene.physics.moveToObject(this, this, 0);
+				this.scene.physics.moveToObject(this.targetBomb, this.targetBomb, 0);
+				this.currentPushDelayTime = 0;
+				this.currentState = bugStates.MOVING;
+				var moveDirection = {x: this.x - this.spawnManager.screenCenter.x, y: this.y - this.spawnManager.screenCenter.y };
+				this.moveDestination = {x: this.x + moveDirection.x, y: this.y + moveDirection.y };
+				return;	
+			}
+			
 			if (this.hasEnteredDeadZone() === true)
 			{
 				this.currentState = bugStates.MOVING;
