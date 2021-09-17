@@ -7,11 +7,12 @@ class SceneMain extends Phaser.Scene
 
     preload()
     {
-        this.load.image("player", "assets/star.png");
+        this.load.spritesheet("player", "assets/undeadvamp.png", { frameWidth: 36.67, frameHeight: 46 });
 		this.load.image("bomb", "assets/bomb.png");
 		this.load.image("bug", "assets/bug.png");
 		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
+		this.load.image("familiars", "assets/circle.png");
     }
 
     create()
@@ -25,7 +26,7 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
 		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
 		
-		this.player = new Player({scene:this,x:400,y:300});
+		this.player = new Player({scene:this,x:300,y:300});
         this.player.create(this);
 		this.gameManager.create(this);
     }
