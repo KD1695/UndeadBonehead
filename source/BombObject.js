@@ -8,7 +8,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(false);
 		this.setVisible(false);
 		this.targeted = false;
-		scene.add.existing(this);
+		scene.sys.arcadePhysics.world.enableBody(this, 0)
     }
 	
 	spawn(spawnX, spawnY, bombGroup)

@@ -26,7 +26,6 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
 		
 		this.player = new Player({scene:this,x:400,y:300});
-		// this.physics.add.collider(this.gameManager.bugsPhysicsGroup, this.gameManager.wallsPhysicsGroup, this.blockBug, null, this);
         this.player.create(this);
 		this.gameManager.create(this);
     }
@@ -37,11 +36,6 @@ class SceneMain extends Phaser.Scene
 		this.spawnObjects(dt);
 		this.gameManager.update(this);
     }
-	
-	// blockBug(bug, wall)
-	// {
-	// 	console.log("BlockBug Called");
-	// }
 	
 	spawnObjects(dt)
 	{
