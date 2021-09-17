@@ -26,7 +26,7 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
 		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
 		
-		this.player = new Player({scene:this,x:400,y:300});
+		this.player = new Player({scene:this,x:300,y:300});
         this.player.create(this);
 		this.gameManager.create(this);
     }
