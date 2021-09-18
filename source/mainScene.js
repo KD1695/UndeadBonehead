@@ -13,11 +13,20 @@ class SceneMain extends Phaser.Scene
 		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
 		this.load.image("familiars", "assets/circle.png");
+		this.load.image("level_bg", "assets/Level/Level_BG_0.png");
+		this.load.image("level_floor", "assets/Level/Level_Floor_1.png");
+		this.load.image("level_walls", "assets/Level/Level_Walls_2.png");
+		this.load.image("level_decor", "assets/Level/Level_Decoration_3.png");
     }
 
     create()
     {
 		this.gameManager = new GameManager();
+
+		this.add.image(300, 300, 'level_bg');
+		this.add.image(300, 300, 'level_floor');
+		this.add.image(300, 300, 'level_walls');
+		this.add.image(300, 300, 'level_decor');
 		
 		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2, spawnZoneBuffer:60});
 		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8, spawnZoneBuffer:60});
