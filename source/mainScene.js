@@ -12,6 +12,7 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bug", "assets/bug.png");
 		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
+		this.load.image("explosion", "assets/explosion.png");
     }
 
     create()
@@ -21,11 +22,12 @@ class SceneMain extends Phaser.Scene
 		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2, spawnZoneBuffer:60});
 		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8, spawnZoneBuffer:60});
 		this.gameManager.bombsPhysicsGroup = new BombGroup(this);
+		this.gameManager.explosionsPhysicsGroup = new ExplosionGroup(this);
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
-		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 30);
+		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 40);
 		
-		this.player = new Player({scene:this,x:400,y:300});
+		this.player = new Player({scene:this,x:this.cameras.main.centerX,y:this.cameras.main.centerY});
         this.player.create(this);
 		this.gameManager.create(this);
     }
@@ -44,7 +46,7 @@ class SceneMain extends Phaser.Scene
 			this.bombSpawnManager.shouldSpawnObject(dt / 1000) === true)
 		{
 			var spawnCoordinates = this.bombSpawnManager.getObjectSpawnCoordinates();
-			this.gameManager.bombsPhysicsGroup.spawnBomb(spawnCoordinates.x, spawnCoordinates.y);
+			this.gameManager.bombsPhysicsGroup.spawnBomb(spawnCoordinates.x, spawnCoordinates.y, this.gameManager.explosionsPhysicsGroup);
 		}
 
 		//Spawn bugs

@@ -21,6 +21,7 @@ class GameManager
         this.canPlayerPunch = true;
         this.canPlayerShoot = true;
         this.bombsPhysicsGroup = null;
+		this.explosionsPhysicsGroup = null;
 		this.bugsPhysicsGroup = [];
 		this.wallsPhysicsGroup = [];
         this.bulletGroup = null;
@@ -31,7 +32,8 @@ class GameManager
     create(scene)
     {
         scene.physics.add.collider(this.bombsPhysicsGroup, this.bulletGroup, this.testfunc, null, scene);
-		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.testFunc2, null, scene);
+		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.stopBug, null, scene);
+		scene.physics.add.overlap(this.explosionsPhysicsGroup, this.wallsPhysicsGroup, this.destroyWall, null, scene);
     }
 
     update(scene)
@@ -47,8 +49,13 @@ class GameManager
         bullet.destroy();
     }
 	
-	testFunc2(bug, wall)
+	stopBug(bug, wall)
 	{
 		bug.name = "collided";
+	}
+	
+	destroyWall(explosion, wall)
+	{
+		wall.destroy();	
 	}
 }

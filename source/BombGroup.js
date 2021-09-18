@@ -7,7 +7,7 @@ class BombGroup extends Phaser.Physics.Arcade.Group
 		this.createNewBombs();
 	}
 	
-	spawnBomb(x, y)
+	spawnBomb(x, y, explosionGroup)
 	{
 		var bomb = this.getFirstDead(false);
 		
@@ -17,7 +17,7 @@ class BombGroup extends Phaser.Physics.Arcade.Group
 			bomb = this.getFirstDead(false);
 		}
 		
-		bomb.spawn(x, y, this);
+		bomb.spawn(x, y, this, explosionGroup);
 	}
 	
 	createNewBombs()

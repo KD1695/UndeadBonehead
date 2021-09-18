@@ -11,7 +11,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		scene.sys.arcadePhysics.world.enableBody(this, 0)
     }
 	
-	spawn(spawnX, spawnY, bombGroup)
+	spawn(spawnX, spawnY, bombGroup, explosionGroup)
 	{		
 		//console.log("Bomb Spawned at: (" + spawnX + ", " + spawnY + ")");
 		
@@ -23,12 +23,19 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(true);
 		this.setVisible(true);
 		
-		this.minActiveTime = 15;
-		this.maxActiveTime = 20;
+		this.minActiveTime = 10;
+		this.maxActiveTime = 15;
 		
 		this.fuseTime = Phaser.Math.Between(this.minActiveTime, this.maxActiveTime);
 		
 		this.bombGroup = bombGroup;
+		this.explosionGroup = explosionGroup;
+		
+		if (this.explosionGroup === null)
+		{
+			console.log("Explosion group is null");
+		}
+		
 		this.bombGroup.totalActiveBombs += 1;
 	}
 	
@@ -51,7 +58,13 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 	
 	explodeBomb()
 	{
+		if (this.explosionGroup === null)
+		{
+			console.log("Explosion group is null IN EXPLODE BOMB");
+		}
+		
 		this.bombGroup.totalActiveBombs -= 1;
+		this.explosionGroup.spawnExplosion(this.x, this.y);
 		this.destroy();
 	}
 }
