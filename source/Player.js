@@ -16,10 +16,46 @@ class Player
     create(scene)
     {
         this.playerSprite.anims.create({
-            key: 'front',
+            key: 'S',
             frames: [ { key: 'player', frame: 0 } ],
             frameRate: 20
         });
+		this.playerSprite.anims.create({
+            key: 'SW',
+            frames: [ { key: 'player', frame: 1 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'W',
+            frames: [ { key: 'player', frame: 2 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'NW',
+            frames: [ { key: 'player', frame: 3 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'N',
+            frames: [ { key: 'player', frame: 4 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'NE',
+            frames: [ { key: 'player', frame: 5 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'E',
+            frames: [ { key: 'player', frame: 6 } ],
+            frameRate: 20
+        });
+		this.playerSprite.anims.create({
+            key: 'SE',
+            frames: [ { key: 'player', frame: 7 } ],
+            frameRate: 20
+        });	
+		
         this.punchGroup = scene.physics.add.group();
         scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'punch');
         scene.gameManager.punch.setScale(0.35);
@@ -35,7 +71,8 @@ class Player
         }
         else
         {
-            this.playerSprite.anims.play('front', true);
+            this.updateAnimation();
+			//this.playerSprite.anims.play('S', true);
         }
 
         if (this.cursors.left.isDown)
@@ -115,4 +152,46 @@ class Player
             repeat: 0
         });
     }
+	
+	updateAnimation()
+	{
+		var currentRotation = Math.abs(360 + (this.familiarSprite.rotation * (180/Math.PI))) % 360;
+		
+		if (currentRotation < 30)
+		{
+			this.playerSprite.anims.play('E', true);
+		}
+		else if (currentRotation < 60)
+		{
+			this.playerSprite.anims.play('SE', true);
+		}
+		else if (currentRotation < 120)
+		{
+			this.playerSprite.anims.play('S', true);
+		}
+		else if (currentRotation < 150)
+		{
+			this.playerSprite.anims.play('SW', true);
+		}
+		else if (currentRotation < 210)
+		{
+			this.playerSprite.anims.play('W', true);
+		}
+		else if (currentRotation < 240)
+		{
+			this.playerSprite.anims.play('NW', true);
+		}
+		else if (currentRotation < 300)
+		{
+			this.playerSprite.anims.play('N', true);
+		}
+		else if (currentRotation < 330)
+		{
+			this.playerSprite.anims.play('NE', true);
+		}
+		else
+		{
+			this.playerSprite.anims.play('E', true);
+		}
+	}
 }
