@@ -43,6 +43,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		if (this.name === "dead")
 		{
 			this.destroy();
+			return;
 		}
 		
 		switch (this.currentState)
