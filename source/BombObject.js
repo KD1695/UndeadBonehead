@@ -14,11 +14,13 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 	spawn(spawnX, spawnY, bombGroup, explosionGroup)
 	{		
 		//console.log("Bomb Spawned at: (" + spawnX + ", " + spawnY + ")");
+		this.name = "uncollided";
+	    this.body.setBounce(0,0);
+        this.setCollideWorldBounds(true);
 		
+		this.pushSpeed = 400;
 		this.x = spawnX;
 		this.y = spawnY;
-		this.body.setBounce(0.0000002,0.0000002);
-        this.setCollideWorldBounds(true);
         this.setScale(2);
 		this.setActive(true);
 		this.setVisible(true);
@@ -42,13 +44,28 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 	preUpdate(timestep, dt)
 	{
 		super.preUpdate(timestep, dt);
-				
+		
+		this.setVelocity(0,0);
+		
 		if (this.fuseTime === -1)
 		{
 			return;
 		}
 		
 		this.fuseTime -= dt / 1000;
+		
+		if (this.name === "collided")
+		{
+			this.name = "pushing";
+			var moveDirection = {x: this.x - this.scene.cameras.main.centerX, y: this.y - this.scene.cameras.main.centerY };
+			this.moveDestination = {x: this.x + moveDirection.x, y: this.y + moveDirection.y };
+			this.targeted = false;
+		}
+		
+		if (this.name === "pushing")
+		{
+			this.pushBomb();
+		}
 		
 		if (this.fuseTime <= 0)
 		{
@@ -66,5 +83,23 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.bombGroup.totalActiveBombs -= 1;
 		this.explosionGroup.spawnExplosion(this.x, this.y);
 		this.destroy();
+	}
+	
+	pushBomb()
+	{
+		
+		
+		if (Math.abs(this.x - this.moveDestination.x) < 5 && Math.abs(this.y - this.moveDestination.y) < 5)
+		{
+			this.x = this.moveDestination.x;
+			this.y = this.moveDestination.y;
+			this.scene.physics.moveToObject(this, this, 0);
+			this.name = "uncollided";
+		}
+		else
+		{
+			this.scene.physics.moveTo(this, this.moveDestination.x, this.moveDestination.y, this.pushSpeed);
+		}
+		
 	}
 }

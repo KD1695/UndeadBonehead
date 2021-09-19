@@ -25,7 +25,7 @@ class BombGroup extends Phaser.Physics.Arcade.Group
 		this.createMultiple(
 		{
 			classType:BombObject,
-			quantity: 20,
+			quantity: 200,
 			active:false,
 			visible:false,
 			key:"bomb",

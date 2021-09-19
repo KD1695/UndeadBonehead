@@ -24,6 +24,7 @@ class GameManager
 		this.explosionsPhysicsGroup = null;
 		this.bugsPhysicsGroup = [];
 		this.wallsPhysicsGroup = [];
+		this.bordersPhysicsGroup = null;
         this.bulletGroup = null;
         this.specials = {};
         this.gameState = gameStates.START;
@@ -31,9 +32,10 @@ class GameManager
 
     create(scene)
     {
-        scene.physics.add.collider(this.bombsPhysicsGroup, this.bulletGroup, this.testfunc, null, scene);
+        scene.physics.add.overlap(this.bombsPhysicsGroup, this.bulletGroup, this.bombBulletCollision, null, scene);
 		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.stopBug, null, scene);
 		scene.physics.add.overlap(this.explosionsPhysicsGroup, this.wallsPhysicsGroup, this.destroyWall, null, scene);
+		scene.physics.add.overlap(this.bombsPhysicsGroup, this.bordersPhysicsGroup, this.stopBombMovement, null, scene);
     }
 
     update(scene)
@@ -44,9 +46,10 @@ class GameManager
         });
     }
 
-    testfunc(bomb, bullet)
+    bombBulletCollision(bomb, bullet)
     {
-        bullet.destroy();
+		bullet.destroy();
+		bomb.name = "collided";
     }
 	
 	stopBug(bug, wall)
@@ -57,5 +60,11 @@ class GameManager
 	destroyWall(explosion, wall)
 	{
 		wall.destroy();	
+	}
+	
+	stopBombMovement(bomb, border)
+	{
+		console.log("BORDER COLLISION");
+		bomb.name = "blocked";
 	}
 }

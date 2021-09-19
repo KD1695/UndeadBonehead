@@ -18,6 +18,8 @@ class SceneMain extends Phaser.Scene
 		this.load.image("level_floor", "assets/Level/Level_Floor_1.png");
 		this.load.image("level_walls", "assets/Level/Level_Walls_2.png");
 		this.load.image("level_decor", "assets/Level/Level_Decoration_3.png");
+		this.load.image("borderVertical", "assets/borderWallVertical.png");
+		this.load.image("borderHorizontal", "assets/borderWallHorizontal.png");
     }
 
     create()
@@ -36,6 +38,9 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
 		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 40);
+		this.gameManager.bordersPhysicsGroup = this.physics.add.group();
+		
+		this.createBorders();
 		
 		this.player = new Player({scene:this,x:this.cameras.main.centerX,y:this.cameras.main.centerY});
         this.player.create(this);
@@ -68,5 +73,17 @@ class SceneMain extends Phaser.Scene
 			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup, spawnManager: this.bugSpawnManager});
 			this.gameManager.bugsSpawned += 1;
 		}
+	}
+	
+	createBorders()
+	{
+		//Left
+		var border = this.gameManager.bordersPhysicsGroup.create(0,this.cameras.main.centerY,'borderVertical');
+		//Top
+		border = this.gameManager.bordersPhysicsGroup.create(this.cameras.main.centerX,0,'borderHorizontal');
+		//Right
+		border = this.gameManager.bordersPhysicsGroup.create(2*this.cameras.main.centerX,this.cameras.main.centerY,'borderVertical');
+		//Bottom
+		border = this.gameManager.bordersPhysicsGroup.create(this.cameras.main.centerX,2*this.cameras.main.centerY,'borderHorizontal');
 	}
 }

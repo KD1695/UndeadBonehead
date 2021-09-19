@@ -255,7 +255,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			return;
 		}
 		
-		if (this.targetBomb.active === true)
+		if (this.targetBomb.active === true && this.targetBomb.targeted === true)
 		{
 			if (this.name === "collided")
 			{
