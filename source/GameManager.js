@@ -35,7 +35,7 @@ class GameManager
 		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.stopBug, null, scene);
 		scene.physics.add.overlap(this.explosionsPhysicsGroup, this.wallsPhysicsGroup, this.destroyWall, null, scene);
 		scene.physics.add.overlap(this.bombsPhysicsGroup, this.bordersPhysicsGroup, this.stopBombMovement, null, scene);
-        // scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, ); add bug death function here
+        scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, this.killBug, null, scene);
     }
 
     update(scene)
