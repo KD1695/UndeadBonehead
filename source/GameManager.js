@@ -18,8 +18,6 @@ class GameManager
 		this.totalBugsToSpawn = 15;
 		this.maxBugsOnScreen = 3;
 		this.maxBombsOnScreen = 7;
-        this.canPlayerPunch = true;
-        this.canPlayerShoot = true;
         this.bombsPhysicsGroup = null;
 		this.explosionsPhysicsGroup = null;
 		this.bugsPhysicsGroup = [];
@@ -28,6 +26,7 @@ class GameManager
         this.bulletGroup = null;
         this.specials = {};
         this.gameState = gameStates.START;
+        this.punch = null;
     }
 
     create(scene)
@@ -36,6 +35,7 @@ class GameManager
 		scene.physics.add.overlap(this.bugsPhysicsGroup, this.wallsPhysicsGroup, this.stopBug, null, scene);
 		scene.physics.add.overlap(this.explosionsPhysicsGroup, this.wallsPhysicsGroup, this.destroyWall, null, scene);
 		scene.physics.add.overlap(this.bombsPhysicsGroup, this.bordersPhysicsGroup, this.stopBombMovement, null, scene);
+        scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, this.killBug, null, scene);
     }
 
     update(scene)
