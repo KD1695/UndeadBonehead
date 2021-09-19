@@ -40,6 +40,11 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	
 	preUpdate(timestep, dt)
 	{	
+		if (this.name === "dead")
+		{
+			this.destroy();
+		}
+		
 		switch (this.currentState)
 		{
 			case bugStates.IDLE:

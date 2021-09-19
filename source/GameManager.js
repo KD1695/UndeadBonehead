@@ -64,7 +64,11 @@ class GameManager
 	
 	stopBombMovement(bomb, border)
 	{
-		console.log("BORDER COLLISION");
 		bomb.name = "blocked";
+	}
+	
+	killBug(punch, bug)
+	{
+		bug.name = "dead";
 	}
 }
