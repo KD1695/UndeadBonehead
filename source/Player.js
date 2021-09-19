@@ -20,6 +20,9 @@ class Player
             frames: [ { key: 'player', frame: 0 } ],
             frameRate: 20
         });
+        this.punchGroup = scene.physics.add.group();
+        scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'punch');
+        scene.gameManager.punch.setScale(0.35);
         this.cursors = scene.input.keyboard.createCursorKeys();
         scene.gameManager.bulletGroup = scene.physics.add.group();
     }
@@ -28,10 +31,7 @@ class Player
     {
         if(this.canPunch == false)
         {
-            //punch animation frames
-            //check punch animation frames end
-            //reset punch state
-            this.Punch(false);
+            //rotate player if needed
         }
         else
         {
@@ -41,17 +41,40 @@ class Player
         if (this.cursors.left.isDown)
         {
             if(this.canRotate)
+            {
                 this.familiarSprite.rotation -= this.rotationSpeed;
+                Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, -this.rotationSpeed, 30); 
+            }
         }
         else if (this.cursors.right.isDown)
         {
             if(this.canRotate)
+            {
                 this.familiarSprite.rotation += this.rotationSpeed;
+                Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, this.rotationSpeed, 30);
+            }
         }
         if(this.cursors.up.isDown)
         {
             if(this.canPunch)
+            {
+                var angle = this.familiarSprite.rotation;
+                var currentX = scene.gameManager.punch.x;
+                var currentY = scene.gameManager.punch.y;
+                var punchDistance = 250;
                 this.Punch(true);
+                var punchTween = scene.tweens.add({
+                    targets: scene.gameManager.punch,
+                    props: {
+                        x: { value: function () { return currentX + punchDistance*Math.cos(angle); }, ease: 'Power2' },
+                        y: { value: function () { return currentY + punchDistance*Math.sin(angle);; }, ease: 'Power2' }
+                    },
+                    duration: 500,
+                    delay: 50,
+                    yoyo: true,
+                    onComplete: this.onCompleteHandler.bind(this)
+                });
+            }
         }
         if(this.cursors.down.isDown)
         {
@@ -68,6 +91,11 @@ class Player
     {
         this.canPunch = !isPunching;
         this.canRotate = !isPunching;
+    }
+
+    onCompleteHandler()
+    {
+        this.Punch(false);
     }
 
     Shoot(scene)
