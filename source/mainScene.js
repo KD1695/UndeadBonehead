@@ -22,10 +22,25 @@ class SceneMain extends Phaser.Scene
 		this.load.image("borderVertical", "assets/borderWallVertical.png");
 		this.load.image("borderHorizontal", "assets/borderWallHorizontal.png");
 		this.load.image("lives", "assets/tile000.png");
+		
+		this.load.audio("music", ['assets/audio/Theme_of_Undead_Bondhead.ogg', 'assets/audio/Theme_of_Undead_Bondhead.mp3']);
+		this.load.audio("punch", 'assets/audio/punch.wav');
+		this.load.audio("shoot", 'assets/audio/shoot.wav');
+		this.load.audio("bugKill", 'assets/audio/bugKill.wav');
+		this.load.audio("bombExplode", 'assets/audio/bombExplode.wav');
+		this.load.audio("wallBreak", 'assets/audio/wallBreak.wav');
+		this.load.audio("powerUpChew", 'assets/audio/powerUpChew.wav');
+		this.load.audio("powerUpComplete", 'assets/audio/powerUpComplete.wav');
+		this.load.audio("playerDeath", 'assets/audio/playerDeath.wav');
+		
     }
 
     create()
     {
+		var music = this.sound.add('music');
+		music.setLoop(true);
+		music.play();
+		
 		this.gameManager = new GameManager();
 
 		this.add.image(300, 300, 'level_bg');

@@ -2,7 +2,7 @@ class Player
 {
     constructor(config)
     {
-        this.rotationSpeed = 0.02;
+        this.rotationSpeed = 0.04;
         this.canRotate = true;
         this.canPunch = true;
         this.rpm = 400;
