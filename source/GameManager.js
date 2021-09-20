@@ -27,6 +27,8 @@ class GameManager
         this.specials = {};
         this.gameState = gameStates.START;
         this.punch = null;
+        this.livesGroup = null;
+        this.lastExplosion = null;
     }
 
     create(scene)
@@ -36,6 +38,7 @@ class GameManager
 		scene.physics.add.overlap(this.explosionsPhysicsGroup, this.wallsPhysicsGroup, this.destroyWall, null, scene);
 		scene.physics.add.overlap(this.bombsPhysicsGroup, this.bordersPhysicsGroup, this.stopBombMovement, null, scene);
         scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, this.killBug, null, scene);
+        scene.physics.add.overlap(scene.player.familiarSprite, this.explosionsPhysicsGroup, this.playerDeathEvent, null, scene);
     }
 
     update(scene)
@@ -44,6 +47,11 @@ class GameManager
         toDestroy.forEach(bullet => {
             bullet.destroy();
         });
+
+        if(this.lives == 0)
+        {
+            this.gameState = gameStates.GAMEOVER;
+        }
     }
 
     bombBulletCollision(bomb, bullet)
@@ -71,4 +79,18 @@ class GameManager
 	{
 		bug.name = "dead";
 	}
+
+    playerDeathEvent(player, explosion)
+    {
+        if(this.gameManager.lastExplosion == null)
+        {
+            this.gameManager.lastExplosion = explosion;
+        }
+        else if(this.gameManager.lastExplosion == explosion)
+        {
+            return;
+        }
+        this.gameManager.lives -= 1;
+        this.gameManager.livesGroup.remove(this.gameManager.livesGroup.children.getArray()[this.gameManager.lives], true, true);
+    }
 }
