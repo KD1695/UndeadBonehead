@@ -32,7 +32,7 @@ class SceneMain extends Phaser.Scene
 		this.load.audio("powerUpChew", 'assets/audio/powerUpChew.wav');
 		this.load.audio("powerUpComplete", 'assets/audio/powerUpComplete.wav');
 		this.load.audio("playerDeath", 'assets/audio/playerDeath.wav');
-		
+		this.load.audio("playerHit", 'assets/audio/playerHit.wav');
     }
 
     create()
