@@ -188,6 +188,18 @@ class Player
 		scene.gameManager.punch.rotation = this.familiarSprite.rotation;
     }
 
+    resetPlayer()
+    {
+        this.playerSprite.angle=0;
+        this.familiarSprite.angle=0;
+        this.canRotate = true;
+        this.canPunch = true;
+        this.inputsUntilBonusConsumption = 7;
+		this.currentInputsConsumingBonus = 0;
+        this.animationAngle = 0;
+        this.secondsSinceLastShot = 60/this.rpm;
+    }
+
     Punch(isPunching)
     {
 		this.canPunch = !isPunching;

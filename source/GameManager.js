@@ -65,6 +65,37 @@ class GameManager
         }
     }
 
+    resetGame(scene)
+    {
+        this.lives = 3;
+        scene.player.resetPlayer();
+        //reset all bombs
+        var bomb = this.bombsPhysicsGroup.getFirstAlive();
+		while (bomb !== null)
+		{
+			bomb.destroy();
+			bomb = this.bombsPhysicsGroup.getFirstAlive();
+		}
+        //reset all bugs
+        var bug = this.bugsPhysicsGroup.getFirstAlive();
+		while (bug !== null)
+		{
+			bug.destroy();
+			bug = this.bugsPhysicsGroup.getFirstAlive();
+		}
+        this.bugsSpawned = 0;
+        //reset powerups
+        var powerup = this.bonusesPhysicsGroup.getFirstAlive();
+        while (powerup !== null)
+		{
+			powerup.destroy();
+			powerup = this.bonusesPhysicsGroup.getFirstAlive();
+		}
+        //regen walls
+        this.wallsPhysicsGroup.regenerateWalls();
+        this.gameState = gameStates.PLAYING;
+    }
+
     bombBulletCollision(bomb, bullet)
     {
 		this.gameManager.scene.shootOnBombSound.play();

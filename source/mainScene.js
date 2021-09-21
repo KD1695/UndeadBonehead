@@ -31,6 +31,7 @@ class SceneMain extends Phaser.Scene
 		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 105, frameHeight: 49 });
 		this.load.image("boneHand", "assets/BoneArm/BoneHand.png");
 		this.load.image("boneLink", "assets/BoneArm/BoneLink.png");
+		this.load.image("gameOver", "assets/gameOver.png");
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
 		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
@@ -57,6 +58,7 @@ class SceneMain extends Phaser.Scene
 		
 		this.gameManager = new GameManager(this);
 
+		this.gameOverScreen = this.add.image(300, 300, 'gameOver');
 		this.add.image(300, 300, 'level_bg');
 		this.add.image(300, 300, 'level_floor');
 		this.add.image(300, 300, 'level_walls');
@@ -83,6 +85,7 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.bordersPhysicsGroup = this.physics.add.group();
 		
 		this.createBorders();
+		this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		
 		this.player = new Player({scene:this,x:this.cameras.main.centerX,y:this.cameras.main.centerY});
         this.player.create(this);
@@ -93,9 +96,17 @@ class SceneMain extends Phaser.Scene
 
     update(timestep, dt)
     {
-        //this.testTile.height += 1;
-		
-		this.player.update(this, dt);
+		if(this.gameManager.gameState == gameStates.GAMEOVER)
+		{
+			this.gameOverScreen.depth = 5;
+			if(this.spaceBar.isDown)
+			{
+				// this.gameManager.resetGame(this);
+				this.gameOverScreen.depth = -1;
+			}
+			return;
+		}
+        this.player.update(this, dt);
 		this.spawnObjects(dt);
 		this.gameManager.update(this);
     }
