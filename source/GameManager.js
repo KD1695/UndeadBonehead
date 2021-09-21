@@ -80,8 +80,11 @@ class GameManager
 	}
 	
 	killBug(punch, bug)
-	{		
-		bug.name = "dead";
+	{
+        if(!this.player.canPunch)
+        {
+            bug.name = "dead";
+        }
 	}
 
     playerDeathEvent(player, explosion)
