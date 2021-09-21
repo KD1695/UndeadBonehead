@@ -27,6 +27,7 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bat", "assets/bat.png");
 		this.load.image("bone", "assets/bone.png");
 		this.load.image("bonus", "assets/potion.png");
+		this.load.image("trap", "assets/trap.png");
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
     }
@@ -55,6 +56,7 @@ class SceneMain extends Phaser.Scene
 		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8, spawnZoneBuffer:60});
 		this.gameManager.bombsPhysicsGroup = new BombGroup(this);
 		this.gameManager.explosionsPhysicsGroup = new ExplosionGroup(this);
+		this.gameManager.trapsPhysicsGroup = new TrapGroup(this);
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
 		this.gameManager.bonusesPhysicsGroup = new BonusGroup(this);

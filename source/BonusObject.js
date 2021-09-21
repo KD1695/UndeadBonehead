@@ -13,10 +13,11 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 		this.scene.sys.arcadePhysics.world.disableBody(this);
     }
 	
-	spawn(spawnX, spawnY)
+	spawn(spawnX, spawnY, trapGroup)
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
+		this.trapGroup = trapGroup;
 		this.setActive(true);
 		this.setVisible(true);
 	}
@@ -24,6 +25,12 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 	preUpdate(timestep, dt)
 	{
 		super.preUpdate(timestep, dt);
+		
+		if (this.name === "explode")
+		{
+			this.explodeBonus();
+			return;
+		}
 		
 		if (this.name === "consumed")
 		{
@@ -40,6 +47,12 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 		{
 			this.currentColliderDelay += (dt / 1000);
 		}
+	}
+	
+	explodeBonus()
+	{	
+		this.scene.gameManager.trapsPhysicsGroup.spawnTrap(this.x, this.y);
+		this.destroy();
 	}
 	
 	consumeBonus()

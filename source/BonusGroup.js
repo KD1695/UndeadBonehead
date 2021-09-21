@@ -6,7 +6,7 @@ class BonusGroup extends Phaser.Physics.Arcade.Group
 		this.createNewBonuses();
 	}
 	
-	spawnBonus(x, y)
+	spawnBonus(x, y, trapGroup)
 	{
 		var bonus = this.getFirstDead(false);
 		
@@ -16,7 +16,7 @@ class BonusGroup extends Phaser.Physics.Arcade.Group
 			bonus = this.getFirstDead(false);
 		}
 		
-		bonus.spawn(x, y);
+		bonus.spawn(x, y, trapGroup);
 	}
 	
 	createNewBonuses()
