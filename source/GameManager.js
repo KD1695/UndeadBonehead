@@ -32,6 +32,7 @@ class GameManager
         this.lastExplosion = null;
 		this.playerGrabbedBonus = false;
 		this.playerConsumedBonus = false;
+		this.uiPrompt = null;
     }
 
     create(scene)

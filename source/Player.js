@@ -12,6 +12,8 @@ class Player
 		this.inputsUntilBonusConsumption = 7;
 		this.currentInputsConsumingBonus = 0;
 		
+		this.displayingUI = false;
+		
         this.playerSprite = config.scene.physics.add.sprite(config.x, config.y, 'player');
         this.familiarSprite = config.scene.physics.add.sprite(config.x, config.y, 'familiars');
     }
@@ -144,6 +146,31 @@ class Player
 				}
             }
         }
+		
+		if (scene.gameManager.playerGrabbedBonus === true)
+		{
+			scene.gameManager.uiPrompt = scene.add.sprite(this.playerSprite.x+30, this.playerSprite.y-30, 'actionUI');
+			scene.gameManager.uiPrompt.anims.create({
+				key: 'display',
+			frames: scene.anims.generateFrameNumbers('actionUI', { start: 0, end: 1 }),
+				frameRate: 10,
+				repeat: 1
+			});
+			
+			if (this.displayingUI === false)
+			{
+				console.log("PLAYING");
+				scene.gameManager.uiPrompt.anims.play('display', true);
+				this.displayingUI = true;
+			}
+		}
+		else if (scene.gameManager.uiPrompt !== null)
+		{
+			scene.gameManager.uiPrompt.destroy();
+			scene.gameManager.UiPrompt = null;
+			this.displayingUI = false;
+		}
+		
         this.secondsSinceLastShot += dt/1000;
     }
 
