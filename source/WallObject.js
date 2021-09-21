@@ -3,7 +3,7 @@ class WallObject extends Phaser.Physics.Arcade.Sprite
 	constructor(scene, x, y)
     {	
 		console.log("Creating Wall!");
-		super(scene, x, y, 'wall');
+		super(scene, x, y, 'horizontalWall');
 		this.setActive(false);
 		this.setVisible(false);
 		scene.add.existing(this);
@@ -22,7 +22,7 @@ class WallObject extends Phaser.Physics.Arcade.Sprite
 		
 		if (shouldRotate === true)
 		{
-			this.angle = 90
+			this.setTexture('verticalWall');
 		}
 	}
 }

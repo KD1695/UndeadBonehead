@@ -23,12 +23,15 @@ class GameManager
 		this.bugsPhysicsGroup = [];
 		this.wallsPhysicsGroup = [];
 		this.bordersPhysicsGroup = null;
+		this.bonusesPhysicsGroup = null;
         this.bulletGroup = null;
         this.specials = {};
         this.gameState = gameStates.START;
         this.punch = null;
         this.livesGroup = null;
         this.lastExplosion = null;
+		this.playerGrabbedBonus = false;
+		this.playerConsumedBonus = false;
     }
 
     create(scene)
@@ -39,6 +42,7 @@ class GameManager
 		scene.physics.add.overlap(this.bombsPhysicsGroup, this.bordersPhysicsGroup, this.stopBombMovement, null, scene);
         scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, this.killBug, null, scene);
         scene.physics.add.overlap(scene.player.familiarSprite, this.explosionsPhysicsGroup, this.playerDeathEvent, null, scene);
+		scene.physics.add.overlap(this.punch, this.bonusesPhysicsGroup, this.grabPotion, null, scene);
     }
 
     update(scene)
@@ -76,7 +80,7 @@ class GameManager
 	}
 	
 	killBug(punch, bug)
-	{
+	{		
 		bug.name = "dead";
 	}
 
@@ -93,4 +97,21 @@ class GameManager
         this.gameManager.lives -= 1;
         this.gameManager.livesGroup.remove(this.gameManager.livesGroup.children.getArray()[this.gameManager.lives], true, true);
     }
+	
+	grabPotion(punch, bonus)
+	{
+		if (bonus.name === "colliderActive")
+		{
+			this.gameManager.playerGrabbedBonus = true;
+			bonus.x = punch.x;
+			bonus.y = punch.y;
+		}
+		
+		if (bonus.name === "colliderActive" && this.gameManager.playerConsumedBonus === true)
+		{
+			bonus.name = "consumed";
+			this.gameManager.playerConsumedBonus = false;
+			this.gameManager.playerGrabbedBonus = false;
+		}
+	}
 }

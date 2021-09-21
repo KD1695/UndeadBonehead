@@ -9,6 +9,9 @@ class Player
         this.animationAngle = 0;
         this.secondsSinceLastShot = 60/this.rpm;
 
+		this.inputsUntilBonusConsumption = 7;
+		this.currentInputsConsumingBonus = 0;
+		
         this.playerSprite = config.scene.physics.add.sprite(config.x, config.y, 'player');
         this.familiarSprite = config.scene.physics.add.sprite(config.x, config.y, 'familiars');
     }
@@ -57,7 +60,7 @@ class Player
         });	
 		
         this.punchGroup = scene.physics.add.group();
-        scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'punch');
+        scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'bat');
         scene.gameManager.punch.setScale(0.35);
         this.cursors = scene.input.keyboard.createCursorKeys();
         scene.gameManager.bulletGroup = scene.physics.add.group();
@@ -75,50 +78,70 @@ class Player
 			//this.playerSprite.anims.play('S', true);
         }
 
+		if (scene.gameManager.playerGrabbedBonus === true)
+		{
+			if (this.cursors.space.isDown && this.cursors.space.getDuration() < 8)
+			{
+				this.consumeBonus(scene);				
+			}
+		}
+		
         if (this.cursors.left.isDown)
         {
             if(this.canRotate)
             {
-                this.familiarSprite.rotation -= this.rotationSpeed;
-                Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, -this.rotationSpeed, 30); 
+                if (scene.gameManager.playerGrabbedBonus === false)
+				{
+					this.familiarSprite.rotation -= this.rotationSpeed;
+					Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, -this.rotationSpeed, 30);	
+				}
             }
         }
         else if (this.cursors.right.isDown)
         {
             if(this.canRotate)
             {
-                this.familiarSprite.rotation += this.rotationSpeed;
-                Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, this.rotationSpeed, 30);
+                if (scene.gameManager.playerGrabbedBonus === false)
+				{
+					this.familiarSprite.rotation += this.rotationSpeed;
+					Phaser.Actions.RotateAroundDistance(this.punchGroup.getChildren(), {x : this.playerSprite.x, y : this.playerSprite.y}, this.rotationSpeed, 30);	
+				}
             }
         }
         if(this.cursors.up.isDown)
         {
             if(this.canPunch)
             {
-                var angle = this.familiarSprite.rotation;
-                var currentX = scene.gameManager.punch.x;
-                var currentY = scene.gameManager.punch.y;
-                var punchDistance = 250;
-                this.Punch(true);
-                var punchTween = scene.tweens.add({
-                    targets: scene.gameManager.punch,
-                    props: {
-                        x: { value: function () { return currentX + punchDistance*Math.cos(angle); }, ease: 'Power2' },
-                        y: { value: function () { return currentY + punchDistance*Math.sin(angle);; }, ease: 'Power2' }
-                    },
-                    duration: 500,
-                    delay: 50,
-                    yoyo: true,
-                    onComplete: this.onCompleteHandler.bind(this)
-                });
+                if (scene.gameManager.playerGrabbedBonus === false)
+				{
+					var angle = this.familiarSprite.rotation;
+					var currentX = scene.gameManager.punch.x;
+					var currentY = scene.gameManager.punch.y;
+					var punchDistance = 250;
+					this.Punch(true);
+					var punchTween = scene.tweens.add({
+						targets: scene.gameManager.punch,
+						props: {
+							x: { value: function () { return currentX + punchDistance*Math.cos(angle); }, ease: 'Power2' },
+							y: { value: function () { return currentY + punchDistance*Math.sin(angle);; }, ease: 'Power2' }
+						},
+						duration: 500,
+						delay: 50,
+						yoyo: true,
+						onComplete: this.onCompleteHandler.bind(this)
+					});
+				}
             }
         }
         if(this.cursors.down.isDown)
         {
             if(this.canRotate && this.secondsSinceLastShot >= 60/this.rpm)
             {
-                this.Shoot(scene);
-                this.secondsSinceLastShot = 0;
+                if (scene.gameManager.playerGrabbedBonus === false)
+				{
+					this.Shoot(scene);
+					this.secondsSinceLastShot = 0;	
+				}
             }
         }
         this.secondsSinceLastShot += dt/1000;
@@ -137,9 +160,9 @@ class Player
 
     Shoot(scene)
     {
-        let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bullet');
+        let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bone');
         bullet.body.setBounce(0,0);
-        bullet.setScale(0.25);
+        bullet.setScale(0.35);
         scene.physics.velocityFromAngle(this.familiarSprite.angle-180, 600, bullet.body.velocity);
     }
 
@@ -152,6 +175,19 @@ class Player
             repeat: 0
         });
     }
+	
+	consumeBonus(scene)
+	{
+		if (this.currentInputsConsumingBonus < this.inputsUntilBonusConsumption)
+		{
+			this.currentInputsConsumingBonus++;
+		}
+		else
+		{
+			scene.gameManager.playerConsumedBonus = true;
+			this.currentInputsConsumingBonus = 0;
+		}
+	}
 	
 	updateAnimation()
 	{

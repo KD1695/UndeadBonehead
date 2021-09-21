@@ -22,17 +22,13 @@ class SceneMain extends Phaser.Scene
 		this.load.image("borderVertical", "assets/borderWallVertical.png");
 		this.load.image("borderHorizontal", "assets/borderWallHorizontal.png");
 		this.load.image("lives", "assets/tile000.png");
+		this.load.image("horizontalWall", "assets/Level/FrontWall.png");
+		this.load.image("verticalWall", "assets/Level/SideWall.png");
+		this.load.image("bat", "assets/bat.png");
+		this.load.image("bone", "assets/bone.png");
+		this.load.image("bonus", "assets/potion.png");
 		
-		this.load.audio("music", ['assets/audio/Theme_of_Undead_Bondhead.ogg', 'assets/audio/Theme_of_Undead_Bondhead.mp3']);
-		this.load.audio("punch", 'assets/audio/punch.wav');
-		this.load.audio("shoot", 'assets/audio/shoot.wav');
-		this.load.audio("bugKill", 'assets/audio/bugKill.wav');
-		this.load.audio("bombExplode", 'assets/audio/bombExplode.wav');
-		this.load.audio("wallBreak", 'assets/audio/wallBreak.wav');
-		this.load.audio("powerUpChew", 'assets/audio/powerUpChew.wav');
-		this.load.audio("powerUpComplete", 'assets/audio/powerUpComplete.wav');
-		this.load.audio("playerDeath", 'assets/audio/playerDeath.wav');
-		this.load.audio("playerHit", 'assets/audio/playerHit.wav');
+		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
     }
 
     create()
@@ -61,7 +57,8 @@ class SceneMain extends Phaser.Scene
 		this.gameManager.explosionsPhysicsGroup = new ExplosionGroup(this);
 		this.gameManager.bugsPhysicsGroup = new BugGroup(this);
 		this.gameManager.wallsPhysicsGroup = new WallGroup(this);
-		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 40);
+		this.gameManager.bonusesPhysicsGroup = new BonusGroup(this);
+		this.gameManager.wallsPhysicsGroup.spawnWalls(this.bombSpawnManager, 10);
 		this.gameManager.bordersPhysicsGroup = this.physics.add.group();
 		
 		this.createBorders();
@@ -79,7 +76,7 @@ class SceneMain extends Phaser.Scene
     }
 	
 	spawnObjects(dt)
-	{
+	{		
 		//Spawn bombs
 		if (this.gameManager.bombsPhysicsGroup.countActive(true) < this.gameManager.maxBombsOnScreen &&
 			this.bombSpawnManager.shouldSpawnObject(dt / 1000) === true)
@@ -94,7 +91,7 @@ class SceneMain extends Phaser.Scene
 			this.bugSpawnManager.shouldSpawnObject(dt / 1000) === true)
 		{
 			var spawnCoordinates = this.bugSpawnManager.getObjectSpawnCoordinates();
-			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup, spawnManager: this.bugSpawnManager});
+			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup, spawnManager: this.bugSpawnManager, bonusesPhysicsGroup: this.gameManager.bonusesPhysicsGroup});
 			this.gameManager.bugsSpawned += 1;
 		}
 	}

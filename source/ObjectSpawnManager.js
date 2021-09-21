@@ -4,9 +4,9 @@ class ObjectSpawnManager
     {	
 		this.timeSinceLastObject = 0;
 		
-		this.minXSpawnPoint = 100;
+		this.minXSpawnPoint = 50;
 		this.minYSpawnPoint = 50;	
-		this.maxXSpawnPoint = 700;
+		this.maxXSpawnPoint = 550;
 		this.maxYSpawnPoint = 550;
 	
 		this.deadZoneWidth = 50;

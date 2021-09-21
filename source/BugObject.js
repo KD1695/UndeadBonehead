@@ -27,12 +27,13 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		scene.sys.arcadePhysics.world.enableBody(this, 0)
     }
 	
-	spawn(spawnX, spawnY, bombsPhysicsGroup, spawnManager)
+	spawn(spawnX, spawnY, bombsPhysicsGroup, spawnManager, bonusesPhysicsGroup)
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
 		this.bombs = bombsPhysicsGroup;
 		this.spawnManager = spawnManager
+		this.bonuses = bonusesPhysicsGroup
 		this.setActive(true);
 		this.setVisible(true);
 		this.body.enable = true;
@@ -42,6 +43,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{	
 		if (this.name === "dead")
 		{
+			this.bonuses.spawnBonus(this.x, this.y);
 			this.destroy();
 			return;
 		}

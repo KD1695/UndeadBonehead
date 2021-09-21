@@ -9,7 +9,7 @@ class WallGroup extends Phaser.Physics.Arcade.Group
 	
 	spawnWalls(spawnManager, deadZoneBuffer)
 	{
-		var wallSeparation = 110;
+		var wallSeparation = 80;
 		
 		//Left Side
 		var wall = this.getFirstDead(false);
