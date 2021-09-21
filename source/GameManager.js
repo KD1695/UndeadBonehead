@@ -71,8 +71,12 @@ class GameManager
 	
 	destroyWall(explosion, wall)
 	{
-		wall.destroy();	
+		wall.destroy();
+		
+		//wall.setActive(false);
+		//wall.setVisible(false);
 	}
+	
 	
 	stopBombMovement(bomb, border)
 	{
@@ -115,6 +119,8 @@ class GameManager
 			bonus.name = "consumed";
 			this.gameManager.playerConsumedBonus = false;
 			this.gameManager.playerGrabbedBonus = false;
+			
+			this.gameManager.wallsPhysicsGroup.regenerateWalls();
 		}
 	}
 }
