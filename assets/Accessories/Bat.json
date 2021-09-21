@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "Bat.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 67,
+				"h": 13
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Bat_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 21,
+						"h": 13
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 21,
+						"h": 11
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 21,
+						"h": 11
+					}
+				},
+				{
+					"filename": "Bat_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 21,
+						"h": 13
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 21,
+						"h": 11
+					},
+					"frame": {
+						"x": 24,
+						"y": 1,
+						"w": 21,
+						"h": 11
+					}
+				},
+				{
+					"filename": "Bat_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 21,
+						"h": 13
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 2,
+						"w": 19,
+						"h": 11
+					},
+					"frame": {
+						"x": 47,
+						"y": 1,
+						"w": 19,
+						"h": 11
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:2b289e4cd766770d6caabcfae9810f0b:86f29ed8b93614fb107867803094c57d:6847dc6fe3ce291dbe43eb09f5b3f06d$"
+	}
+}
