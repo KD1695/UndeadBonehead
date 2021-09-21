@@ -2,7 +2,7 @@ class Player
 {
     constructor(config)
     {
-        this.rotationSpeed = 0.04;
+        this.rotationSpeed = 0.08;
         this.canRotate = true;
         this.canPunch = true;
         this.rpm = 400;
@@ -60,6 +60,7 @@ class Player
         });	
 		
         this.punchGroup = scene.physics.add.group();
+		this.punchLink = null;
         scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'bat');
         scene.gameManager.punch.setScale(0.35);
         this.cursors = scene.input.keyboard.createCursorKeys();
@@ -80,7 +81,7 @@ class Player
 
 		if (scene.gameManager.playerGrabbedBonus === true)
 		{
-			if (this.cursors.space.isDown && this.cursors.space.getDuration() < 8)
+			if (this.cursors.space.isDown && this.cursors.space.getDuration() < 15)
 			{
 				this.consumeBonus(scene);				
 			}
@@ -144,6 +145,29 @@ class Player
 				}
             }
         }
+		if (this.canPunch === false)
+		{
+			console.log("Is Punching");
+			
+			if (this.punchLink === null)
+			{
+				this.punchLink = scene.add.tileSprite(this.playerSprite.x, this.playerSprite.y, 34, 80, "link");
+				//this.punchLink.rotation = this.familiarSprite.rotation;
+				//this.punchLink.setTileScale(34,80);
+				console.log("Created Link");
+			}
+			else
+			{
+				console.log("Display Height: " + this.punchLink.displayHeight);
+				this.punchLink.displayHeight = 160//Phaser.Math.Distance.Between(this.playerSprite.x, this.playerSprite.y, scene.gameManager.punch.x, scene.gameManager.punch.y);
+			}
+		}
+		else if (this.punchLink !== null)
+		{
+			this.punchLink.destroy();
+			this.punchLink = null;
+		}
+		
         this.secondsSinceLastShot += dt/1000;
     }
 

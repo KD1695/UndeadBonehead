@@ -27,6 +27,7 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bat", "assets/bat.png");
 		this.load.image("bone", "assets/bone.png");
 		this.load.image("bonus", "assets/potion.png");
+		this.load.image("link", "assets/link.png");
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
     }

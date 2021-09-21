@@ -24,6 +24,7 @@ class GameManager
 		this.wallsPhysicsGroup = [];
 		this.bordersPhysicsGroup = null;
 		this.bonusesPhysicsGroup = null;
+		this.punchLinkGroup = null;
         this.bulletGroup = null;
         this.specials = {};
         this.gameState = gameStates.START;
