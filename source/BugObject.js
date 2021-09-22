@@ -48,6 +48,15 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			return;
 		}
 		
+		if (this.name === "trapped")
+		{
+			this.moveSpeed = 100;
+		}
+		else
+		{
+			this.moveSpeed = 400;
+		}
+		
 		switch (this.currentState)
 		{
 			case bugStates.IDLE:

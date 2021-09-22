@@ -9,39 +9,44 @@ class WallGroup extends Phaser.Physics.Arcade.Group
 	
 	spawnWalls(spawnManager, deadZoneBuffer)
 	{
-		var wallSeparation = 80;
+		this.wallSeparation = 30;
+		
+		this.minXBuffer = spawnManager.minDeadZoneX - deadZoneBuffer;
+		this.maxXBuffer = spawnManager.maxDeadZoneX + deadZoneBuffer;
+		this.minYBuffer = spawnManager.minDeadZoneY - deadZoneBuffer;
+		this.maxYBuffer = spawnManager.maxDeadZoneY + deadZoneBuffer;
 		
 		//Left Side
 		var wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.minDeadZoneX - deadZoneBuffer, spawnManager.maxDeadZoneY - wallSeparation, true);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY - this.wallSeparation, true);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.minDeadZoneX - deadZoneBuffer, spawnManager.screenCenter.y, true);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY, true);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.minDeadZoneX - deadZoneBuffer, spawnManager.minDeadZoneY + wallSeparation, true);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY + this.wallSeparation, true);
 		
 		//Right Side
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.maxDeadZoneX + deadZoneBuffer, spawnManager.maxDeadZoneY - wallSeparation, true);
+		wall.spawn(this.maxXBuffer, this.scene.cameras.main.centerY - this.wallSeparation, true);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.maxDeadZoneX + deadZoneBuffer, spawnManager.screenCenter.y, true);
+		wall.spawn(this.maxXBuffer, spawnManager.screenCenter.y, true);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.maxDeadZoneX + deadZoneBuffer, spawnManager.minDeadZoneY + wallSeparation, true);
+		wall.spawn(this.maxXBuffer, this.scene.cameras.main.centerY + this.wallSeparation, true);
 		
 		//Top Side
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.minDeadZoneX + wallSeparation, spawnManager.minDeadZoneY - deadZoneBuffer, false);
+		wall.spawn(this.scene.cameras.main.centerX + this.wallSeparation, this.minYBuffer, false);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.screenCenter.x, spawnManager.minDeadZoneY - deadZoneBuffer, false);
+		wall.spawn(spawnManager.screenCenter.x, this.minYBuffer, false);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.maxDeadZoneX - wallSeparation, spawnManager.minDeadZoneY - deadZoneBuffer, false);
+		wall.spawn(this.scene.cameras.main.centerX - this.wallSeparation, this.minYBuffer, false);
 		
 		//Bottom Side
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.minDeadZoneX + wallSeparation, spawnManager.maxDeadZoneY + deadZoneBuffer, false);
+		wall.spawn(this.scene.cameras.main.centerX + this.wallSeparation, this.maxYBuffer, false);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.screenCenter.x, spawnManager.maxDeadZoneY + deadZoneBuffer, false);
+		wall.spawn(spawnManager.screenCenter.x, this.maxYBuffer, false);
 		wall = this.getFirstDead(false);
-		wall.spawn(spawnManager.maxDeadZoneX - wallSeparation, spawnManager.maxDeadZoneY + deadZoneBuffer, false);
+		wall.spawn(this.scene.cameras.main.centerX - this.wallSeparation, this.maxYBuffer, false);
 	}
 	
 	createNewWalls()
@@ -56,4 +61,51 @@ class WallGroup extends Phaser.Physics.Arcade.Group
 			key:"wall",
 		});	
 	}
+	
+	regenerateWalls()
+	{
+		//Destroy all existing walls
+		var wall = this.getFirstAlive();
+		while (wall !== null)
+		{
+			wall.destroy();
+			wall = this.getFirstAlive();
+		}
+		
+		//Populate new walls
+		this. createNewWalls();
+		//Left Side
+		var wall = this.getFirstDead(false);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY - this.wallSeparation, true);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY, true);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.minXBuffer, this.scene.cameras.main.centerY + this.wallSeparation, true);
+		
+		//Right Side
+		wall = this.getFirstDead(false);
+		wall.spawn(this.maxXBuffer, this.scene.cameras.main.centerY - this.wallSeparation, true);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.maxXBuffer, this.scene.cameras.main.centerY, true);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.maxXBuffer, this.scene.cameras.main.centerY + this.wallSeparation, true);
+		
+		//Top Side
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX + this.wallSeparation, this.minYBuffer, false);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX, this.minYBuffer, false);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX - this.wallSeparation, this.minYBuffer, false);
+		
+		//Bottom Side
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX + this.wallSeparation, this.maxYBuffer, false);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX, this.maxYBuffer, false);
+		wall = this.getFirstDead(false);
+		wall.spawn(this.scene.cameras.main.centerX - this.wallSeparation, this.maxYBuffer, false);
+	}
+	
+	
 }

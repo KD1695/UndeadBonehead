@@ -43,6 +43,8 @@ class GameManager
         scene.physics.add.overlap(this.punch, this.bugsPhysicsGroup, this.killBug, null, scene);
         scene.physics.add.overlap(scene.player.familiarSprite, this.explosionsPhysicsGroup, this.playerDeathEvent, null, scene);
 		scene.physics.add.overlap(this.punch, this.bonusesPhysicsGroup, this.grabPotion, null, scene);
+		scene.physics.add.overlap(this.bonusesPhysicsGroup, this.bulletGroup, this.bonusBulletCollision, null, scene);
+		scene.physics.add.overlap(this.bugsPhysicsGroup, this.trapsPhysicsGroup, this.trapBug, null, scene);
     }
 
     update(scene)
@@ -64,14 +66,24 @@ class GameManager
 		bomb.name = "collided";
     }
 	
+	bonusBulletCollision(bonus, bullet)
+    {
+		bonus.name = "explode";
+    }
+	
 	stopBug(bug, wall)
 	{
 		bug.name = "collided";
 	}
 	
+	trapBug(bug, trap)
+	{
+		bug.name = "trapped";
+	}
+	
 	destroyWall(explosion, wall)
 	{
-		wall.destroy();	
+		wall.destroy();
 	}
 	
 	stopBombMovement(bomb, border)
@@ -80,8 +92,11 @@ class GameManager
 	}
 	
 	killBug(punch, bug)
-	{		
-		bug.name = "dead";
+	{
+        if(!this.player.canPunch)
+        {
+            bug.name = "dead";
+        }
 	}
 
     playerDeathEvent(player, explosion)
@@ -112,6 +127,8 @@ class GameManager
 			bonus.name = "consumed";
 			this.gameManager.playerConsumedBonus = false;
 			this.gameManager.playerGrabbedBonus = false;
+			
+			this.gameManager.wallsPhysicsGroup.regenerateWalls();
 		}
 	}
 }
