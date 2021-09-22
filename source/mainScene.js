@@ -29,6 +29,17 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bonus", "assets/potion.png");
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
+		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
+		this.load.audio("bugKill", 'assets/Audio/bugKill.wav');
+		this.load.audio("playerDeath", 'assets/Audio/playerDeath.wav');
+		this.load.audio("playerHit", 'assets/Audio/playerHit.wav');
+		this.load.audio("powerUpChew", 'assets/Audio/powerUpChew.wav');
+		this.load.audio("powerUpComplete", 'assets/Audio/powerUpComplete.wav');
+		this.load.audio("punch", 'assets/Audio/punch.wav');
+		this.load.audio("shoot", 'assets/Audio/shoot.wav');
+		this.load.audio("shootOnBomb", 'assets/Audio/shootOnBomb.wav');
+		this.load.audio("wallBreak", 'assets/Audio/wallBreak.wav');
+		this.load.audio("wallGenerate", 'assets/Audio/wallGenerate.wav');
     }
 
     create()
@@ -36,6 +47,8 @@ class SceneMain extends Phaser.Scene
 		var music = this.sound.add('music');
 		music.setLoop(true);
 		music.play();
+		
+		createAudio();
 		
 		this.gameManager = new GameManager();
 
@@ -94,6 +107,33 @@ class SceneMain extends Phaser.Scene
 			this.gameManager.bugsPhysicsGroup.spawnBug({x: spawnCoordinates.x, y: spawnCoordinates.y, bombsPhysicsGroup: this.gameManager.bombsPhysicsGroup, spawnManager: this.bugSpawnManager, bonusesPhysicsGroup: this.gameManager.bonusesPhysicsGroup});
 			this.gameManager.bugsSpawned += 1;
 		}
+	}
+	
+	createAudio()
+	{
+		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
+		this.load.audio("bugKill", 'assets/Audio/bugKill.wav');
+		this.load.audio("playerDeath", 'assets/Audio/playerDeath.wav');
+		this.load.audio("playerHit", 'assets/Audio/playerHit.wav');
+		this.load.audio("powerUpChew", 'assets/Audio/powerUpChew.wav');
+		this.load.audio("powerUpComplete", 'assets/Audio/powerUpComplete.wav');
+		this.load.audio("punch", 'assets/Audio/punch.wav');
+		this.load.audio("shoot", 'assets/Audio/shoot.wav');
+		this.load.audio("shootOnBomb", 'assets/Audio/shootOnBomb.wav');
+		this.load.audio("wallBreak", 'assets/Audio/wallBreak.wav');
+		this.load.audio("wallGenerate", 'assets/Audio/wallGenerate.wav');
+		
+		this.bombExplodeSound = this.sound.add('bombExplode');
+		this.bugKillSound = this.sound.add('bugKill');
+		this.playerDeathSound = this.sound.add('playerDeath');
+		this.playerHitSound = this.sound.add('playerHit');
+		this.powerUpChewSound = this.sound.add('powerUpChew');
+		this.powerUpCompleteSound = this.sound.add('powerUpComplete');
+		this.punchSound = this.sound.add('punch');
+		this.shootSound = this.sound.add('shoot');
+		this.shootOnBombSound = this.sound.add('shootOnBomb');
+		this.wallBreakSound = this.sound.add('wallBreak');
+		this.wallGenerateSound = this.sound.add('wallGenerate');
 	}
 	
 	createBorders()
