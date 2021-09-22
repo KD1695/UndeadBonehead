@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "MolotovExplosion.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 55,
+				"h": 109
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Molotov_7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 72
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 53,
+						"h": 72
+					}
+				},
+				{
+					"filename": "Molotov_6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 25,
+						"w": 33,
+						"h": 33
+					},
+					"frame": {
+						"x": 1,
+						"y": 75,
+						"w": 33,
+						"h": 33
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:d178922c71cdb332fd8a195875f4913e:b127fcf66d17b574caa7615a4c3fd937:cc88fd05e7e6b8390ad0c27c5d57af32$"
+	}
+}

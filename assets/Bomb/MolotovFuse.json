@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "MolotovFuse.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 53,
+				"h": 74
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Molotov_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 16,
+						"w": 23,
+						"h": 37
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 23,
+						"h": 37
+					}
+				},
+				{
+					"filename": "Molotov_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 24,
+						"w": 18,
+						"h": 29
+					},
+					"frame": {
+						"x": 1,
+						"y": 40,
+						"w": 18,
+						"h": 29
+					}
+				},
+				{
+					"filename": "Molotov_5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 20,
+						"w": 12,
+						"h": 33
+					},
+					"frame": {
+						"x": 21,
+						"y": 40,
+						"w": 12,
+						"h": 33
+					}
+				},
+				{
+					"filename": "Molotov_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 18,
+						"w": 23,
+						"h": 35
+					},
+					"frame": {
+						"x": 26,
+						"y": 1,
+						"w": 23,
+						"h": 35
+					}
+				},
+				{
+					"filename": "Molotov_4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 53,
+						"h": 72
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 19,
+						"w": 17,
+						"h": 34
+					},
+					"frame": {
+						"x": 35,
+						"y": 38,
+						"w": 17,
+						"h": 34
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:1465cbd58d66bf7ef70aa0459d7cccee:e4de91cbc5bfcb92fa32d6c4ba9a203e:2d2ed46bda8639b336e4fed1c01c9e1e$"
+	}
+}
