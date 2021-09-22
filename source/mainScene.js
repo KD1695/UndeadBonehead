@@ -49,9 +49,9 @@ class SceneMain extends Phaser.Scene
 		music.setLoop(true);
 		music.play();
 		
-		createAudio();
+		this.createAudio();
 		
-		this.gameManager = new GameManager();
+		this.gameManager = new GameManager(this);
 
 		this.add.image(300, 300, 'level_bg');
 		this.add.image(300, 300, 'level_floor');

@@ -9,9 +9,10 @@ const gameStates =
 
 class GameManager 
 {
-    constructor()   
+    constructor(scene)   
     {
-        this.lives = 3;
+        this.scene = scene;
+		this.lives = 3;
         this.shields = 8;
         this.playerDirection = 0;
 		this.bugsSpawned = 0;
@@ -54,14 +55,16 @@ class GameManager
             bullet.destroy();
         });
 
-        if(this.lives == 0)
+        if(this.lives == 0 && this.gameState !== gameStates.GAMEOVER)
         {
-            this.gameState = gameStates.GAMEOVER;
+            scene.playerDeathSound.play();
+			this.gameState = gameStates.GAMEOVER;
         }
     }
 
     bombBulletCollision(bomb, bullet)
     {
+		this.gameManager.scene.shootOnBombSound.play();
 		bullet.destroy();
 		bomb.name = "collided";
     }
@@ -83,6 +86,7 @@ class GameManager
 	
 	destroyWall(explosion, wall)
 	{
+		this.gameManager.scene.wallBreakSound.play();
 		wall.destroy();
 	}
 	
@@ -111,6 +115,7 @@ class GameManager
         }
         this.gameManager.lives -= 1;
         this.gameManager.livesGroup.remove(this.gameManager.livesGroup.children.getArray()[this.gameManager.lives], true, true);
+		this.gameManager.scene.playerHitSound.play();
     }
 	
 	grabPotion(punch, bonus)

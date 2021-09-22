@@ -75,6 +75,8 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 	
 	explodeBomb()
 	{
+		this.scene.bombExplodeSound.play();
+		
 		if (this.explosionGroup === null)
 		{
 			console.log("Explosion group is null IN EXPLODE BOMB");

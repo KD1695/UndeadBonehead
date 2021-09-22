@@ -43,6 +43,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{	
 		if (this.name === "dead")
 		{
+			this.scene.bugKillSound.play();
 			this.bonuses.spawnBonus(this.x, this.y);
 			this.destroy();
 			return;

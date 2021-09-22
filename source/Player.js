@@ -114,6 +114,8 @@ class Player
             {
                 if (scene.gameManager.playerGrabbedBonus === false)
 				{
+					scene.punchSound.play();
+					
 					var angle = this.familiarSprite.rotation;
 					var currentX = scene.gameManager.punch.x;
 					var currentY = scene.gameManager.punch.y;
@@ -149,7 +151,7 @@ class Player
 
     Punch(isPunching)
     {
-        this.canPunch = !isPunching;
+		this.canPunch = !isPunching;
         this.canRotate = !isPunching;
     }
 
@@ -160,7 +162,8 @@ class Player
 
     Shoot(scene)
     {
-        let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bone');
+        scene.shootSound.play();
+		let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bone');
         bullet.body.setBounce(0,0);
         bullet.setScale(0.35);
         scene.physics.velocityFromAngle(this.familiarSprite.angle-180, 600, bullet.body.velocity);
@@ -180,10 +183,12 @@ class Player
 	{
 		if (this.currentInputsConsumingBonus < this.inputsUntilBonusConsumption)
 		{
+			scene.powerUpChewSound.play();
 			this.currentInputsConsumingBonus++;
 		}
 		else
 		{
+			scene.powerUpCompleteSound.play();
 			scene.gameManager.playerConsumedBonus = true;
 			this.currentInputsConsumingBonus = 0;
 		}

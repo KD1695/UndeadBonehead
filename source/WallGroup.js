@@ -64,6 +64,8 @@ class WallGroup extends Phaser.Physics.Arcade.Group
 	
 	regenerateWalls()
 	{
+		this.scene.wallGenerateSound.play();
+		
 		//Destroy all existing walls
 		var wall = this.getFirstAlive();
 		while (wall !== null)
