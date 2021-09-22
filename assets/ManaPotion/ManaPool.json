@@ -1,0 +1,146 @@
+{
+	"textures": [
+		{
+			"image": "ManaPool.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 318,
+				"h": 28
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "ManaPool_1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ManaPool_2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 53,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ManaPool_3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 106,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ManaPool_4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 159,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ManaPool_5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 212,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ManaPool_6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 53,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					},
+					"frame": {
+						"x": 265,
+						"y": 0,
+						"w": 53,
+						"h": 28
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:2759f9266cc4388240e06e9802680069:591e146b44b5d483c55531985032c773:34d3067f250a0fd7ac652c11e1a0d115$"
+	}
+}
