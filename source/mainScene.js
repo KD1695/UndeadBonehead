@@ -29,6 +29,8 @@ class SceneMain extends Phaser.Scene
 		this.load.image("bone", "assets/Accessories/Bone.png");
 		this.load.atlas("bonus", "assets/ManaPotion/ManaPotion.png", "assets/ManaPotion/ManaPotion.json");
 		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 105, frameHeight: 49 });
+		this.load.image("boneHand", "assets/BoneArm/BoneHand.png");
+		this.load.image("boneLink", "assets/BoneArm/BoneLink.png");
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
 		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
@@ -85,11 +87,15 @@ class SceneMain extends Phaser.Scene
 		this.player = new Player({scene:this,x:this.cameras.main.centerX,y:this.cameras.main.centerY});
         this.player.create(this);
 		this.gameManager.create(this);
+		
+		//this.testTile = this.add.tileSprite(200, 200, 9, 100, "bone");
     }
 
     update(timestep, dt)
     {
-        this.player.update(this, dt);
+        //this.testTile.height += 1;
+		
+		this.player.update(this, dt);
 		this.spawnObjects(dt);
 		this.gameManager.update(this);
     }

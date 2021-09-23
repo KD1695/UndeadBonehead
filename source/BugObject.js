@@ -110,11 +110,12 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		
 		if (this.name === "trapped")
 		{
+			console.log("TRAPPED");
 			this.moveSpeed = 100;
 		}
-		else if (this.name === "uncollided")
+		else
 		{
-			this.moveSpeed = 400;
+			this.moveSpeed = 400;	
 		}
 		
 		switch (this.currentState)

@@ -13,7 +13,7 @@ class Player
 		this.currentInputsConsumingBonus = 0;
         this.spaceMashBar = config.scene.add.rectangle(300, 580, 490, 5, 0x1dd6d3);
         this.spaceMashBar.visible = false;
-        
+        this.scene = config.scene;
 		
         this.playerSprite = config.scene.physics.add.sprite(config.x, config.y, 'player');
         this.familiarSprite = config.scene.physics.add.sprite(config.x, config.y, 'familiars');
@@ -63,16 +63,24 @@ class Player
         });	
 		
         this.punchGroup = scene.physics.add.group();
-        scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'bat');
-        scene.gameManager.punch.anims.create({
+        
+		scene.gameManager.bone = this.punchGroup.create(this.playerSprite.x-30, this.playerSprite.y, 'bat');
+		scene.gameManager.chain = this.scene.add.tileSprite(this.playerSprite.x, this.playerSprite.y, 8, 0, "boneLink");
+		scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'boneHand');
+        scene.gameManager.bone.anims.create({
             key: 'idle',
 			frames: scene.gameManager.punch.anims.generateFrameNumbers('bat', { start: 0, end: 2 }),
 			frameRate: 8,
 			repeat: -1
         });
-		scene.gameManager.punch.anims.play("idle", true);
 		
-		scene.gameManager.bone = this.punchGroup.create(this.playerSprite.x-30, this.playerSprite.y, 'bone');
+		scene.gameManager.bone.anims.play("idle", true);
+		
+		scene.gameManager.chain.originY = 1;
+		scene.gameManager.chain.setVisible(false);
+		scene.gameManager.chain.setDepth(2);
+		scene.gameManager.punch.setDepth(3);
+		this.playerSprite.setDepth(4);
 		scene.gameManager.bone.setScale(1.5);
 		scene.gameManager.punch.setScale(1.5);
         this.cursors = scene.input.keyboard.createCursorKeys();
@@ -165,6 +173,19 @@ class Player
             }
         }
         this.secondsSinceLastShot += dt/1000;
+		
+		if (Phaser.Math.Distance.Between(this.playerSprite.x, this.playerSprite.y, scene.gameManager.punch.x, scene.gameManager.punch.y) > 35)
+		{
+			scene.gameManager.chain.setVisible(true);
+		}
+		else
+		{
+			scene.gameManager.chain.setVisible(false);
+		}
+		
+		scene.gameManager.chain.height = Phaser.Math.Distance.Between(this.playerSprite.x, this.playerSprite.y, scene.gameManager.punch.x, scene.gameManager.punch.y);
+		scene.gameManager.chain.rotation = this.familiarSprite.rotation + (Math.PI / 2);
+		scene.gameManager.punch.rotation = this.familiarSprite.rotation;
     }
 
     Punch(isPunching)

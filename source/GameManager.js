@@ -30,6 +30,7 @@ class GameManager
         this.gameState = gameStates.START;
         this.punch = null;
 		this.bone = null;
+		this.chain = null;
         this.livesGroup = null;
         this.lastExplosion = null;
 		this.playerGrabbedBonus = false;
