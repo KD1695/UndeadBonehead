@@ -17,7 +17,7 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
-		this.setScale(1.5);
+		this.setScale(2);
 		this.trapGroup = trapGroup;
 		this.setActive(true);
 		this.setVisible(true);
