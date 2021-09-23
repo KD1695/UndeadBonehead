@@ -21,6 +21,7 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(true);
 		this.setVisible(true);
 		this.name = "none";
+		this.setScale(1.25);
 		
 		this.anims.create({
 			key: 'idle',

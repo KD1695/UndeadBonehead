@@ -12,7 +12,7 @@ class SceneMain extends Phaser.Scene
 		this.load.atlas("bug", "assets/Enemy/VillagerHunter.png", "assets/Enemy/VillagerHunter.json");
 		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
-		this.load.image("explosion", "assets/explosion.png");
+		this.load.atlas("explosion", "assets/Bomb/MolotovExplosion.png", "assets/Bomb/MolotovExplosion.json");
 		this.load.image("punch", "assets/bullet.png");
 		this.load.image("familiars", "assets/circle.png");
 		this.load.image("level_bg", "assets/Level/Level_BG_0.png");
@@ -25,8 +25,8 @@ class SceneMain extends Phaser.Scene
 		this.load.image("lives", "assets/Character/LifeIcon/LifeIcon.png");
 		this.load.image("horizontalWall", "assets/Level/FrontWall.png");
 		this.load.image("verticalWall", "assets/Level/SideWall.png");
-		this.load.image("bat", "assets/bat.png");
-		this.load.image("bone", "assets/bone.png");
+		this.load.spritesheet("bat", "assets/Accessories/Bat.png", { frameWidth: 22.33333, frameHeight: 13 });
+		this.load.image("bone", "assets/Accessories/Bone.png");
 		this.load.atlas("bonus", "assets/ManaPotion/ManaPotion.png", "assets/ManaPotion/ManaPotion.json");
 		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 105, frameHeight: 49 });
 		

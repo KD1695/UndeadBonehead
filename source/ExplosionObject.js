@@ -21,6 +21,18 @@ class ExplosionObject extends Phaser.Physics.Arcade.Sprite
 		this.setVisible(true);
 		
 		this.explosionGroup = explosionGroup;
+		
+		this.anims.create({
+			key: 'explode',
+			frames: [
+				{key: 'explosion', frame: "Molotov_6.png"},
+				{key: 'explosion', frame: "Molotov_7.png"},
+ 			],
+			frameRate: 5,
+			repeat: 0	
+		});
+		
+		this.anims.play('explode', true);
 	}
 	
 	preUpdate(timestep, dt)

@@ -64,14 +64,24 @@ class Player
 		
         this.punchGroup = scene.physics.add.group();
         scene.gameManager.punch = this.punchGroup.create(this.playerSprite.x+30, this.playerSprite.y, 'bat');
-        scene.gameManager.punch.setScale(0.35);
+        scene.gameManager.punch.anims.create({
+            key: 'idle',
+			frames: scene.gameManager.punch.anims.generateFrameNumbers('bat', { start: 0, end: 2 }),
+			frameRate: 8,
+			repeat: -1
+        });
+		scene.gameManager.punch.anims.play("idle", true);
+		
+		scene.gameManager.bone = this.punchGroup.create(this.playerSprite.x-30, this.playerSprite.y, 'bone');
+		scene.gameManager.bone.setScale(1.5);
+		scene.gameManager.punch.setScale(1.5);
         this.cursors = scene.input.keyboard.createCursorKeys();
         scene.gameManager.bulletGroup = scene.physics.add.group();
     }
 
     update(scene, dt)
-    {
-        if(this.canPunch == false)
+    {		
+		if(this.canPunch == false)
         {
             //rotate player if needed
         }
@@ -173,7 +183,7 @@ class Player
         scene.shootSound.play();
 		let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bone');
         bullet.body.setBounce(0,0);
-        bullet.setScale(0.35);
+        bullet.setScale(1.5);
         scene.physics.velocityFromAngle(this.familiarSprite.angle-180, 600, bullet.body.velocity);
     }
 

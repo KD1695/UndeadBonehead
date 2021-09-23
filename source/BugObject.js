@@ -112,7 +112,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		{
 			this.moveSpeed = 100;
 		}
-		else
+		else if (this.name === "uncollided")
 		{
 			this.moveSpeed = 400;
 		}
@@ -407,9 +407,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{
 		var horizontalMoveDirection = destinationX - this.x;
 		var verticalMoveDirection = destinationY - this.y;
-		
-		console.log("CurrentState: " + this.currentState);
-		
+				
 		if (this.currentState === bugStates.PUSHING && this.currentPushDelayTime < this.pushDelay)
 		{
 			this.anims.play("walkS", true);

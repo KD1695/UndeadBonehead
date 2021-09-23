@@ -8,7 +8,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(false);
 		this.setVisible(false);
 		this.targeted = false;
-		scene.sys.arcadePhysics.world.enableBody(this, 0)
+		scene.sys.arcadePhysics.world.enableBody(this, 0);
     }
 	
 	spawn(spawnX, spawnY, bombGroup, explosionGroup)
@@ -29,6 +29,11 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.maxActiveTime = 15;
 		
 		this.fuseTime = Phaser.Math.Between(this.minActiveTime, this.maxActiveTime);
+		var spriteChangeIncrement = this.fuseTime / 5;
+		this.state1Time = this.fuseTime - spriteChangeIncrement;
+		this.state2Time = this.fuseTime - (spriteChangeIncrement * 2);
+		this.state3Time = this.fuseTime - (spriteChangeIncrement * 3);
+		this.state4Time = this.fuseTime - (spriteChangeIncrement * 4);
 		
 		this.bombGroup = bombGroup;
 		this.explosionGroup = explosionGroup;
@@ -40,20 +45,44 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		
 		this.bombGroup.totalActiveBombs += 1;
 		
-		this.anims.create({
-			key: 'idle',
-			frames: [
-				{key: 'bomb', frame: "Molotov_1.png"},
-				{key: 'bomb', frame: "Molotov_2.png"},
-				{key: 'bomb', frame: "Molotov_3.png"},
-				{key: 'bomb', frame: "Molotov_4.png"},
-				{key: 'bomb', frame: "Molotov_5.png"},
- 			],
-			frameRate: 5,
-			repeat: -1	
+		this.anims.create(
+			{
+				key: '1',
+				frames: [{key: 'bomb', frame: "Molotov_1.png"}],
+				frameRate: 1,
+				repeat: 0	
+		});
+		this.anims.create(
+			{
+				key: '2',
+				frames: [{key: 'bomb', frame: "Molotov_2.png"}],
+				frameRate: 1,
+				repeat: 0	
+		});
+		this.anims.create(
+			{
+				key: '3',
+				frames: [{key: 'bomb', frame: "Molotov_3.png"}],
+				frameRate: 1,
+				repeat: 0	
+		});
+		this.anims.create(
+			{
+				key: '4',
+				frames: [{key: 'bomb', frame: "Molotov_4.png"}],
+				frameRate: 1,
+				repeat: 0	
+		});
+		this.anims.create(
+			{
+				key: '5',
+				frames: [{key: 'bomb', frame: "Molotov_5.png"}],
+				frameRate: 1,
+				repeat: 0	
 		});
 		
-		this.anims.play('idle', true);
+		
+		this.anims.play('1', true);
 	}
 	
 	preUpdate(timestep, dt)
@@ -68,6 +97,8 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		}
 		
 		this.fuseTime -= dt / 1000;
+		
+		this.updateAnimation();
 		
 		if (this.name === "collided")
 		{
@@ -117,6 +148,29 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		{
 			this.scene.physics.moveTo(this, this.moveDestination.x, this.moveDestination.y, this.pushSpeed);
 		}
-		
+	}
+	
+	updateAnimation()
+	{
+		if (this.fuseTime < this.state4Time)
+		{
+			this.anims.play('5', true);
+		}
+		else if (this.fuseTime < this.state3Time)
+		{
+			this.anims.play('4', true);
+		}
+		else if (this.fuseTime < this.state2Time)
+		{
+			this.anims.play('3', true);
+		}
+		else if (this.fuseTime < this.state1Time)
+		{
+			this.anims.play('2', true);
+		}
+		else
+		{
+			this.anims.play('1', true);
+		}
 	}
 }

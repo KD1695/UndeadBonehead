@@ -29,6 +29,7 @@ class GameManager
         this.specials = {};
         this.gameState = gameStates.START;
         this.punch = null;
+		this.bone = null;
         this.livesGroup = null;
         this.lastExplosion = null;
 		this.playerGrabbedBonus = false;
