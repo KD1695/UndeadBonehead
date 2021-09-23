@@ -33,6 +33,7 @@ class GameManager
         this.lastExplosion = null;
 		this.playerGrabbedBonus = false;
 		this.playerConsumedBonus = false;
+        this.score = 0;
     }
 
     create(scene)
@@ -101,6 +102,9 @@ class GameManager
         {
             bug.name = "dead";
         }
+        this.gameManager.score += 10;
+        let str = this.gameManager.score.toString().padStart(3, "0")
+        this.scoreText.setText(str);
 	}
 
     playerDeathEvent(player, explosion)
