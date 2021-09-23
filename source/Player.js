@@ -202,7 +202,16 @@ class Player
     Shoot(scene)
     {
         scene.shootSound.play();
-		let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bone');
+		let bullet = scene.gameManager.bulletGroup.create(this.playerSprite.x,this.playerSprite.y,'bat');
+		bullet.anims.create({
+            key: 'idle',
+			frames: scene.gameManager.punch.anims.generateFrameNumbers('bat', { start: 0, end: 2 }),
+			frameRate: 8,
+			repeat: -1
+        });
+		
+		bullet.anims.play("idle", true);
+		
         bullet.body.setBounce(0,0);
         bullet.setScale(1.5);
         scene.physics.velocityFromAngle(this.familiarSprite.angle-180, 600, bullet.body.velocity);
