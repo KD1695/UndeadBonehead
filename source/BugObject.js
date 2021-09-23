@@ -58,7 +58,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				{key: 'bug', frame: "ENEMY_1.png"},
 				{key: 'bug', frame: "ENEMY_3.png"},
  			],
-			frameRate: 30,
+			frameRate: 20,
 			repeat: -1	
 		});
 		
@@ -69,7 +69,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				{key: 'bug', frame: "ENEMY_4.png"},
 				{key: 'bug', frame: "ENEMY_6.png"},
  			],
-			frameRate: 30,
+			frameRate: 20,
 			repeat: -1	
 		});
 		
@@ -80,7 +80,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				{key: 'bug', frame: "ENEMY_7.png"},
 				{key: 'bug', frame: "ENEMY_9.png"},
  			],
-			frameRate: 30,
+			frameRate: 20,
 			repeat: -1	
 		});
 		
@@ -91,13 +91,15 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 				{key: 'bug', frame: "ENEMY_10.png"},
 				{key: 'bug', frame: "ENEMY_12.png"},
  			],
-			frameRate: 30,
+			frameRate: 20,
 			repeat: -1	
 		});
 	}
 	
 	preUpdate(timestep, dt)
 	{	
+		super.preUpdate(timestep, dt);
+		
 		if (this.name === "dead")
 		{
 			this.scene.bugKillSound.play();
@@ -333,6 +335,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		if (this.currentPushDelayTime < this.pushDelay)
 		{
 			this.currentPushDelayTime += timestep;
+			this.updateAnimation(this.x, this.y);
 			return;
 		}
 		
@@ -404,6 +407,14 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	{
 		var horizontalMoveDirection = destinationX - this.x;
 		var verticalMoveDirection = destinationY - this.y;
+		
+		console.log("CurrentState: " + this.currentState);
+		
+		if (this.currentState === bugStates.PUSHING && this.currentPushDelayTime < this.pushDelay)
+		{
+			this.anims.play("walkS", true);
+			return;
+		}
 		
 		if (Math.abs(horizontalMoveDirection) > Math.abs(verticalMoveDirection))
 		{
