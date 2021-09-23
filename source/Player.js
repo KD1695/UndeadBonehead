@@ -11,6 +11,9 @@ class Player
 
 		this.inputsUntilBonusConsumption = 7;
 		this.currentInputsConsumingBonus = 0;
+        this.spaceMashBar = config.scene.add.rectangle(300, 580, 490, 5, 0x1dd6d3);
+        this.spaceMashBar.visible = false;
+        
 		
         this.playerSprite = config.scene.physics.add.sprite(config.x, config.y, 'player');
         this.familiarSprite = config.scene.physics.add.sprite(config.x, config.y, 'familiars');
@@ -80,11 +83,16 @@ class Player
 
 		if (scene.gameManager.playerGrabbedBonus === true)
 		{
+            this.spaceMashBar.visible = true;
 			if (this.cursors.space.isDown && this.cursors.space.getDuration() < 8)
 			{
 				this.consumeBonus(scene);				
 			}
 		}
+        else
+        {
+            this.spaceMashBar.visible = false;
+        }
 		
         if (this.cursors.left.isDown)
         {
@@ -183,6 +191,7 @@ class Player
 	{
 		if (this.currentInputsConsumingBonus < this.inputsUntilBonusConsumption)
 		{
+            this.spaceMashBar.displayWidth = 490-this.currentInputsConsumingBonus*70;
 			scene.powerUpChewSound.play();
 			this.currentInputsConsumingBonus++;
 		}
@@ -191,6 +200,8 @@ class Player
 			scene.powerUpCompleteSound.play();
 			scene.gameManager.playerConsumedBonus = true;
 			this.currentInputsConsumingBonus = 0;
+            this.spaceMashBar.visible = false;
+            this.spaceMashBar.displayWidth = 490;
 		}
 	}
 	

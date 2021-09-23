@@ -19,9 +19,10 @@ class SceneMain extends Phaser.Scene
 		this.load.image("level_floor", "assets/Level/Level_Floor_1.png");
 		this.load.image("level_walls", "assets/Level/Level_Walls_2.png");
 		this.load.image("level_decor", "assets/Level/Level_Decoration_3.png");
+		this.load.image("level_UI", "assets/Level/Level_UI_4.png");
 		this.load.image("borderVertical", "assets/borderWallVertical.png");
 		this.load.image("borderHorizontal", "assets/borderWallHorizontal.png");
-		this.load.image("lives", "assets/tile000.png");
+		this.load.image("lives", "assets/Character/LifeIcon/LifeIcon.png");
 		this.load.image("horizontalWall", "assets/Level/FrontWall.png");
 		this.load.image("verticalWall", "assets/Level/SideWall.png");
 		this.load.image("bat", "assets/bat.png");
@@ -58,13 +59,15 @@ class SceneMain extends Phaser.Scene
 		this.add.image(300, 300, 'level_floor');
 		this.add.image(300, 300, 'level_walls');
 		this.add.image(300, 300, 'level_decor');
+		this.add.image(300, 300, 'level_UI');
 
 		this.gameManager.livesGroup = this.add.group({
 			key: 'lives',
 			repeat: 2,
-			setXY: {x:25, y:567, stepX:25}
+			setXY: {x:28, y:216, stepY:20}
 		});
-		console.log("DEATH EVENT RECORDED!!!! " + this.gameManager.livesGroup.getLength());
+		this.scoreText = this.add.text(13, 173, '000', { fontSize: '16px', fill: '#1dd6d3' });
+		this.scoreText.setAlign('center');
 		
 		this.bombSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bomb', minDelay:1, maxDelay:2, spawnZoneBuffer:60});
 		this.bugSpawnManager = new ObjectSpawnManager({camera:this.cameras.main, objectKey:'bug', minDelay:5, maxDelay:8, spawnZoneBuffer:60});
