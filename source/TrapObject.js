@@ -8,9 +8,7 @@ class TrapObject extends Phaser.Physics.Arcade.Sprite
 		scene.sys.arcadePhysics.world.enableBody(this, 0)
 		
 		this.trapUptime = 5;
-		this.currentUptime = 0;
-		
-		
+		this.currentUptime = 0;	
     }
 	
 	spawn(spawnX, spawnY, trapGroup)
@@ -19,7 +17,7 @@ class TrapObject extends Phaser.Physics.Arcade.Sprite
 		
 		this.x = spawnX;
 		this.y = spawnY;
-		this.setScale(2.5);
+		//this.setScale(2.5);
 		this.setActive(true);
 		this.setVisible(true);
 		

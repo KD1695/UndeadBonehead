@@ -38,7 +38,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.setVisible(true);
 		this.body.enable = true;
 		
-		this.setScale(1.5);
+		//this.setScale(1.5);
 		
 		var walkingFrameRate = 60;
 		

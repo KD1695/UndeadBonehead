@@ -27,8 +27,8 @@ class SceneMain extends Phaser.Scene
 		this.load.image("verticalWall", "assets/Level/SideWall.png");
 		this.load.image("bat", "assets/bat.png");
 		this.load.image("bone", "assets/bone.png");
-		this.load.spritesheet("bonus", "assets/ManaPotion/ManaPotion.png", {frameWidth: 19.66666, frameHeight: 22 });
-		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 53, frameHeight: 28 });
+		this.load.atlas("bonus", "assets/ManaPotion/ManaPotion.png", "assets/ManaPotion/ManaPotion.json");
+		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 105, frameHeight: 49 });
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
 		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
