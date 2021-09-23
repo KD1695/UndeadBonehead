@@ -4,51 +4,30 @@
 			"image": "ManaPotion.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 59,
-				"h": 22
+				"w": 25,
+				"h": 62
 			},
 			"scale": 1,
 			"frames": [
 				{
 					"filename": "ManaPotion_1.png",
 					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 19,
-						"h": 20
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 19,
-						"h": 20
-					},
-					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 19,
-						"h": 20
-					}
-				},
-				{
-					"filename": "ManaPotion_3.png",
-					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 19,
-						"h": 20
+						"w": 31,
+						"h": 33
 					},
 					"spriteSourceSize": {
-						"x": 1,
-						"y": 0,
-						"w": 17,
-						"h": 19
+						"x": 3,
+						"y": 4,
+						"w": 25,
+						"h": 26
 					},
 					"frame": {
-						"x": 22,
-						"y": 1,
-						"w": 17,
-						"h": 19
+						"x": 0,
+						"y": 0,
+						"w": 25,
+						"h": 26
 					}
 				},
 				{
@@ -56,20 +35,41 @@
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 19,
-						"h": 20
+						"w": 31,
+						"h": 33
 					},
 					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 17,
-						"h": 18
+						"x": 6,
+						"y": 7,
+						"w": 19,
+						"h": 19
 					},
 					"frame": {
-						"x": 41,
-						"y": 1,
+						"x": 0,
+						"y": 26,
+						"w": 19,
+						"h": 19
+					}
+				},
+				{
+					"filename": "ManaPotion_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 31,
+						"h": 33
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
 						"w": 17,
-						"h": 18
+						"h": 17
+					},
+					"frame": {
+						"x": 0,
+						"y": 45,
+						"w": 17,
+						"h": 17
 					}
 				}
 			]
@@ -78,6 +78,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:1d232292ac6b69363408da053d166a8f:2d414b5500b0018ece2bdbb4c580290a:e17f4bc77af1c4a54a94b300e377c8f5$"
+		"smartupdate": "$TexturePacker:SmartUpdate:096e22305ea450335534e22c13fb6b74:0bf2acc6bb859aefe0e1b6cafb40053a:e17f4bc77af1c4a54a94b300e377c8f5$"
 	}
 }
