@@ -71,6 +71,7 @@ class GameManager
 	
 	bonusBulletCollision(bonus, bullet)
     {
+		this.gameManager.scene.shootOnBonusSound.play();
 		bonus.name = "explode";
     }
 	

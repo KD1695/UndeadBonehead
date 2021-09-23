@@ -24,7 +24,7 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.stateDuration = Phaser.Math.Between(this.minStateDuration, this.maxStateDuration);
 		this.currentStateTime = 0;
 		scene.add.existing(this);
-		scene.sys.arcadePhysics.world.enableBody(this, 0)
+		scene.sys.arcadePhysics.world.enableBody(this, 0);	
     }
 	
 	spawn(spawnX, spawnY, bombsPhysicsGroup, spawnManager, bonusesPhysicsGroup)
@@ -37,6 +37,63 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		this.setActive(true);
 		this.setVisible(true);
 		this.body.enable = true;
+		
+		this.setScale(1.5);
+		
+		var walkingFrameRate = 60;
+		
+		this.anims.create({
+			key: 'idle',
+			frames: [
+				{key: 'bug', frame: "ENEMY_1.png"},
+ 			],
+			frameRate: 1,
+			repeat: -1	
+		});
+		
+		this.anims.create({
+			key: 'walkS',
+			frames: [
+				{key: 'bug', frame: "ENEMY_2.png"},
+				{key: 'bug', frame: "ENEMY_1.png"},
+				{key: 'bug', frame: "ENEMY_3.png"},
+ 			],
+			frameRate: 30,
+			repeat: -1	
+		});
+		
+		this.anims.create({
+			key: 'walkE',
+			frames: [
+				{key: 'bug', frame: "ENEMY_5.png"},
+				{key: 'bug', frame: "ENEMY_4.png"},
+				{key: 'bug', frame: "ENEMY_6.png"},
+ 			],
+			frameRate: 30,
+			repeat: -1	
+		});
+		
+		this.anims.create({
+			key: 'walkN',
+			frames: [
+				{key: 'bug', frame: "ENEMY_8.png"},
+				{key: 'bug', frame: "ENEMY_7.png"},
+				{key: 'bug', frame: "ENEMY_9.png"},
+ 			],
+			frameRate: 30,
+			repeat: -1	
+		});
+		
+		this.anims.create({
+			key: 'walkW',
+			frames: [
+				{key: 'bug', frame: "ENEMY_11.png"},
+				{key: 'bug', frame: "ENEMY_10.png"},
+				{key: 'bug', frame: "ENEMY_12.png"},
+ 			],
+			frameRate: 30,
+			repeat: -1	
+		});
 	}
 	
 	preUpdate(timestep, dt)
@@ -83,6 +140,8 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 	idleUpdate(timestep)
 	{		
 		//console.log("IDLE");
+		
+		this.anims.play("idle", true);
 		
 		if (this.currentStateTime < this.stateDuration)
 		{
@@ -143,6 +202,8 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		}
 		else
 		{
+			this.updateAnimation(this.moveDestination.x, this.moveDestination.y);
+			
 			this.scene.physics.moveTo(this, this.moveDestination.x, this.moveDestination.y, this.moveSpeed);
 		}
 	}
@@ -245,6 +306,8 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			}
 		}
 		
+		this.updateAnimation(this.targetBomb.x, this.targetBomb.y);
+		
 		//Prioritize horizontal collisions first (picked arbitrarily)
 		if (horizontalCollision === true)
 		{
@@ -298,10 +361,10 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 			}
 			else
 			{
+				this.updateAnimation(this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y);
 				this.scene.physics.moveTo(this, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
 				this.scene.physics.moveTo(this.targetBomb, this.spawnManager.screenCenter.x, this.spawnManager.screenCenter.y, this.moveSpeed);
-			}
-			
+			}	
 		}
 		else
 		{
@@ -335,5 +398,34 @@ class BugObject extends Phaser.Physics.Arcade.Sprite
 		}
 		
 		return false;
+	}
+	
+	updateAnimation(destinationX, destinationY)
+	{
+		var horizontalMoveDirection = destinationX - this.x;
+		var verticalMoveDirection = destinationY - this.y;
+		
+		if (Math.abs(horizontalMoveDirection) > Math.abs(verticalMoveDirection))
+		{
+			if (horizontalMoveDirection > 0)
+			{
+				this.anims.play("walkE", true);
+			}
+			else
+			{
+				this.anims.play("walkW", true);
+			}
+		}
+		else
+		{
+			if (verticalMoveDirection > 0)
+			{
+				this.anims.play("walkS", true);
+			}
+			else
+			{
+				this.anims.play("walkN", true);
+			}
+		}
 	}
 }

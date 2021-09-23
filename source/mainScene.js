@@ -8,8 +8,8 @@ class SceneMain extends Phaser.Scene
     preload()
     {
         this.load.spritesheet("player", "assets/undeadvamp.png", { frameWidth: 37.6666, frameHeight: 46 });
-		this.load.image("bomb", "assets/bomb.png");
-		this.load.image("bug", "assets/bug.png");
+		this.load.atlas("bomb", "assets/Bomb/MolotovFuse.png", "assets/Bomb/MolotovFuse.json");
+		this.load.atlas("bug", "assets/Enemy/VillagerHunter.png", "assets/Enemy/VillagerHunter.json");
 		this.load.image("wall", "assets/wall.png");
         this.load.image("bullet", "assets/bullet.png");
 		this.load.image("explosion", "assets/explosion.png");
@@ -26,8 +26,8 @@ class SceneMain extends Phaser.Scene
 		this.load.image("verticalWall", "assets/Level/SideWall.png");
 		this.load.image("bat", "assets/bat.png");
 		this.load.image("bone", "assets/bone.png");
-		this.load.image("bonus", "assets/potion.png");
-		this.load.image("trap", "assets/trap.png");
+		this.load.spritesheet("bonus", "assets/ManaPotion/ManaPotion.png", {frameWidth: 19.66666, frameHeight: 22 });
+		this.load.spritesheet("trap", "assets/ManaPotion/ManaPool.png", {frameWidth: 53, frameHeight: 28 });
 		
 		this.load.audio("music", ['assets/Audio/Theme_of_Undead_Bonehead.ogg', 'assets/Audio/Theme_of_Undead_Bonehead.mp3']);
 		this.load.audio("bombExplode", 'assets/Audio/bombExplode.wav');
@@ -39,6 +39,7 @@ class SceneMain extends Phaser.Scene
 		this.load.audio("punch", 'assets/Audio/punch.wav');
 		this.load.audio("shoot", 'assets/Audio/shoot.wav');
 		this.load.audio("shootOnBomb", 'assets/Audio/shootOnBomb.wav');
+		this.load.audio("shootOnBonus", 'assets/Audio/shootOnBonus.wav');
 		this.load.audio("wallBreak", 'assets/Audio/wallBreak.wav');
 		this.load.audio("wallGenerate", 'assets/Audio/wallGenerate.wav');
     }
@@ -134,6 +135,7 @@ class SceneMain extends Phaser.Scene
 		this.punchSound = this.sound.add('punch');
 		this.shootSound = this.sound.add('shoot');
 		this.shootOnBombSound = this.sound.add('shootOnBomb');
+		this.shootOnBonusSound = this.sound.add('shootOnBonus');
 		this.wallBreakSound = this.sound.add('wallBreak');
 		this.wallGenerateSound = this.sound.add('wallGenerate');
 	}

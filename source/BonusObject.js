@@ -17,9 +17,20 @@ class BonusObject extends Phaser.Physics.Arcade.Sprite
 	{		
 		this.x = spawnX;
 		this.y = spawnY;
+		this.setScale(1.5);
 		this.trapGroup = trapGroup;
 		this.setActive(true);
 		this.setVisible(true);
+		this.name = "none";
+		this.anims.create({
+			key: 'idle',
+			frames: this.anims.generateFrameNumbers('bonus', { start: 0, end: 2 }),
+			frameRate: 5,
+			repeat: -1
+			
+		});
+		
+		this.anims.play('idle', true);
 	}
 	
 	preUpdate(timestep, dt)

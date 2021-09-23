@@ -21,7 +21,7 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		this.pushSpeed = 400;
 		this.x = spawnX;
 		this.y = spawnY;
-        this.setScale(2);
+        //this.setScale(1.5);
 		this.setActive(true);
 		this.setVisible(true);
 		
@@ -39,6 +39,21 @@ class BombObject extends Phaser.Physics.Arcade.Sprite
 		}
 		
 		this.bombGroup.totalActiveBombs += 1;
+		
+		this.anims.create({
+			key: 'idle',
+			frames: [
+				{key: 'bomb', frame: "Molotov_1.png"},
+				{key: 'bomb', frame: "Molotov_2.png"},
+				{key: 'bomb', frame: "Molotov_3.png"},
+				{key: 'bomb', frame: "Molotov_4.png"},
+				{key: 'bomb', frame: "Molotov_5.png"},
+ 			],
+			frameRate: 5,
+			repeat: -1	
+		});
+		
+		this.anims.play('idle', true);
 	}
 	
 	preUpdate(timestep, dt)
